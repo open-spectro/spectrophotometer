@@ -9,18 +9,30 @@ void setup() {
   Keyboard.begin();
 }
 
+int waitTime=50;
+
 void loop() {
-  for (int i=0; i<64; i++) {
-    for (int j=65; j<92; j++) {
-    Keyboard.write(j);
-    delay(10);
+  for (int i=0; i<8; i++) {
+    for (int j=32; j<127; j++) {
+      Keyboard.press(j);
+      delay(waitTime);
+      Keyboard.release(j);
+      delay(waitTime);
     }
-    Keyboard.write(13);
-    Keyboard.write(10);
+    Keyboard.press(13);
+    delay(waitTime);
+    Keyboard.release(13);
+    delay(waitTime);
+    Keyboard.press(10);
+    delay(waitTime);
+    Keyboard.release(10);
+    delay(waitTime);
+    delay(500);
   }
   delay(120000);
 
 }
+
 
 
 

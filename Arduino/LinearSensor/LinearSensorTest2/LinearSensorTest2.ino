@@ -4,15 +4,25 @@
 // Define various ADC prescaler:
 const unsigned char PS_32 = (1 << ADPS2) | (1 << ADPS0);
 const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
-int CLKpin = 12;    // <-- Arduino pin delivering the clock pulses to pin 3 (CLK) of the TSL1402R 
-int SIpin = 11;     // <-- Arduino pin delivering the SI (serial-input) pulse to pin 2 of the TSL1402R 
+
+int CLKpin = 8;    // <-- Arduino pin delivering the clock pulses to pin 3 (CLK) of the TSL1402R 
+int SIpin = 7;     // <-- Arduino pin delivering the SI (serial-input) pulse to pin 2 of the TSL1402R 
 int AOpin1 = A1;    // <-- Arduino pin connected to pin 4 (analog output 1)of the TSL1402R
 int AOpin2 = A2;    // <-- Arduino pin connected to pin 8 (analog output 2)of the TSL1402R
 int IntArray[256]; // <-- the array where the readout of the photodiodes is stored, as integers
 int counter=0;
 
+#define RED    11
+#define GREEN   6
+#define BLUE   13
+#define UV     10
+#define WHITE   9
+
+
 void setup() 
 {
+  delay(100);
+  
   // Initialize two Arduino pins as digital output:
   pinMode(CLKpin, OUTPUT); 
   pinMode(SIpin, OUTPUT);  
