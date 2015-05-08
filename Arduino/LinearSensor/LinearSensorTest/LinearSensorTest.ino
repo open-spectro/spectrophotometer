@@ -7,6 +7,8 @@ const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 int CLKpin = 8;    // <-- Arduino pin delivering the clock pulses to pin 3 (CLK) of the TSL1402R 
 int SIpin = 7;     // <-- Arduino pin delivering the SI (serial-input) pulse to pin 2 of the TSL1402R 
 
+#define ARRAY_SIZE 256
+#define AVERAGE 4
 
 #define AO_PIN1 A1
 #define AO_PIN2 A2
@@ -26,6 +28,10 @@ byte LEDS[]={
 
 void setup() 
 {
+  delay(5000);
+  Keyboard.begin();
+
+
   // Initialize two Arduino pins as digital output:
   pinMode(CLKpin, OUTPUT); 
   pinMode(SIpin, OUTPUT);  
@@ -49,9 +55,9 @@ void setup()
 
 void loop() 
 {  
-  // testAllColors();
- // testGreenIntensity();
- fullOn();
+  testAllColors();
+  // testGreenIntensity();
+  // fullOn();
 }
 
 
@@ -63,18 +69,18 @@ void fullOn() {
 
 void testAllColors() {
   for (byte i=0; i<sizeof(LEDS); i++) {
-    unsigned int intArray[256]; // <-- the array where the readout of the photodiodes is stored, as integers
+    unsigned int intArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
     byte channel=LEDS[i];
     int currentIntensity=autoIntensity(channel);
     acquire(intArray, channel);
-    printResult(intArray, i, currentIntensity, false);
+    printResult(intArray, i, currentIntensity, false, false);
   }
 }
 
 void testGreenIntensity() {
   int intensity=256;
   for (byte i=0; i<5; i++) {
-    unsigned int intArray[256]; // <-- the array where the readout of the photodiodes is stored, as integers
+    unsigned int intArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
     byte channel=LEDS[1];
     if (i<4) {
       analogWrite(channel, intensity-1);
@@ -83,10 +89,11 @@ void testGreenIntensity() {
       analogWrite(channel, 0);
     }
     acquire(intArray, channel);
-    printResult(intArray, i, intensity, false);
+    printResult(intArray, i, intensity, false, false);
     intensity/=2;
   }
 }
+
 
 
 
