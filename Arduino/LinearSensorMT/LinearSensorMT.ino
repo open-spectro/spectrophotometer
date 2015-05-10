@@ -15,9 +15,9 @@
 #define AO_PIN2 A2
 #define INTEGRATION_TIME 20
 
-#define REPEAT_ACQUISITION 63  // max value=63 !!!!
-#define REPEAT_CALIBRATE  10
-#define SMOOTH_CALIBRATE  15
+#define REPEAT_ACQUISITION   63  // max value=63 !!!!
+#define REPEAT_CALIBRATE     10
+#define SMOOTH_CALIBRATE     15
 #define RED    11
 #define GREEN   6
 #define BLUE   13

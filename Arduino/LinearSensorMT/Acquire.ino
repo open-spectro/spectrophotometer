@@ -43,7 +43,8 @@ void acquire(unsigned int intArray[]) {
 void acquire(unsigned int intArray[], byte nbRepeat) {
   clearArray(intArray);
   acquireOne(intArray, false);   // an empty cycle
-  for (int counter=0; counter<nbRepeat; counter++) {
+
+    for (int counter=0; counter<nbRepeat; counter++) {
     acquireOne(intArray, true);
   }
 }
@@ -58,11 +59,13 @@ int diffArray(unsigned int signalArray[], unsigned int backgroundArray[]) {
       signalArray[i]=0;
     } 
     else {
-      signalArray[i]-=backgroundArray[i];;
+      signalArray[i]-=backgroundArray[i];
+      ;
     }
   }
   return maxBackground;
 }
+
 
 
 

@@ -6,13 +6,13 @@ void setupActions() {
 
 void fullOn() {
   for (byte i=0; i<sizeof(LEDS); i++) {
-    digitalWrite(LEDS[i], HIGH);
+    analogWrite(LEDS[i], 255);
   }
 }
 
 void fullOff() {
   for (byte i=0; i<sizeof(LEDS); i++) {
-    digitalWrite(LEDS[i], LOW);
+    analogWrite(LEDS[i], 0);
   }
 }
 
@@ -45,9 +45,9 @@ void testAllColors() {
     unsigned int backgroundArray[ARRAY_SIZE];
     byte channel=LEDS[i];
     int currentIntensity=autoIntensity(channel);
-    acquire(signalArray, channel);
+    acquire(signalArray);
     analogWrite(channel, 0);
-    acquire(backgroundArray, channel);
+    acquire(backgroundArray);
     diffArray(signalArray, backgroundArray);
     printResult(output, signalArray, backgroundArray, i, currentIntensity);
   }
@@ -69,9 +69,10 @@ void realExperiment() {
   }
 
   int currentIntensity=autoIntensity(WHITE);
-  acquire(signalArray, WHITE);
+  
+  acquire(signalArray);
   analogWrite(WHITE, 0);
-  acquire(backgroundArray, WHITE);
+  acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 5, currentIntensity);
 
@@ -83,9 +84,9 @@ void realExperiment() {
   }
 
   analogWrite(WHITE, currentIntensity-1);
-  acquire(signalArray, WHITE);
+  acquire(signalArray);
   analogWrite(WHITE, 0);
-  acquire(backgroundArray, WHITE);
+  acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 6, currentIntensity);
 
@@ -100,9 +101,9 @@ void testGreenIntensity() {
     unsigned int backgroundArray[ARRAY_SIZE];
     byte channel=GREEN;
     analogWrite(channel, intensity-1);
-    acquire(signalArray, channel);
+    acquire(signalArray);
     analogWrite(channel, 0);
-    acquire(backgroundArray, channel);
+    acquire(backgroundArray);
     diffArray(signalArray, backgroundArray);
     printResult(&Serial, signalArray, backgroundArray, 1, intensity);
     intensity/=2;
