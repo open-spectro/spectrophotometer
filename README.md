@@ -68,6 +68,37 @@ To create the box we are using:
 The user interface is based on the 
 [Visualizer](http://github.com/npellet/visualizer)
 
+## Control from the terminal
+
+From a terminal on the macintosh you could currently do something like
+
+``` screen /dev/tty.usbmodemfd131 115200 ```
+
+(you need to find the correct tty device using 
+
+``` ls /dev/tty.usb* ```
+
+To kill this session
+
+``` CTRL + a and then k ```
+
+You are then in the terminal menu and you can enter
+
+```h + enter```
+
+For the various options.
+
+To take a spectrum:
+
+```r + enter```
+
+You will then have 10s (blue binling) to put the reference sample.
+Once the green flash appears you have 10s to put the sample.
+
+All the results may be pasted in a view:
+
+http://www.cheminfo.org/Spectra/Spectrophotometer/Test.html
+
 
 
 
