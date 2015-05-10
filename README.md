@@ -23,6 +23,10 @@ There are 4 main parts in this project
 * the box
 * the end-user graphical interface
 
+We hope that we could transfer the data by emulating a keyboard
+and send the result directly in a web page where it could be
+processed.
+
 ## Electronic and microcontroller
 
 We played for a while with the Arduino platform and quickly
@@ -33,11 +37,25 @@ This means that all the electronic can be designed to fit
 exactly your needs but you will still be able to program
 the device using the [Arduino](http://www.arduino.cc/).
 
-The linear sensor is based on 
+The linear sensor is based on the linear sensor array 
+[TSL1402R](http://ams.com/content/download/250165/975693/TSL1402R_Datasheet_EN_v1.pdf).
+
+### Buttons
+
+In order to prevent any problems with mechanical buttons and
+buttons on the service, capasitive sensors are considered.
+
+http://playground.arduino.cc/Main/CapacitiveSensor?from=Main.CapSense
 
 ## Firmware
 
+The device emulates an Arduino Leonardo and can therefore be
+programmed using the USB cable using the
+[Arduino software](http://www.arduino.cc/en/Main/Software). We 
+currently use version 1.0.6.
 
+The first tie the bootloader has to be installed on the
+microcontroller ATMega32U4.
 
 ## The box
 
@@ -47,7 +65,8 @@ To create the box we are using:
 
 ## End-user graphical interface
 
-The user interface
+The user interface is based on the 
+[Visualizer](http://github.com/npellet/visualizer)
 
 
 
