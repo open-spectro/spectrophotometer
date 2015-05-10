@@ -2,7 +2,7 @@
 #define WAIT_TIME 50 
 
 void printKeyboard(unsigned int intArray[]) {
-  for (int i=0; i<256; i++) {
+  for (int i=0; i<ARRAY_SIZE; i++) {
     delay(WAIT_TIME);
     if (i%16 == 0) {
       Keyboard.print(intArray[i]);

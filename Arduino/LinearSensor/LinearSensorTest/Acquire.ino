@@ -37,14 +37,36 @@ int autoIntensity(int channel) {
 
 
 void acquire(unsigned int intArray[], int channel) {
+  acquire(intArray, channel, REPEAT_ACQUISITION);
+}
+
+void acquire(unsigned int intArray[], int channel, byte nbRepeat) {
   clearArray(intArray);
   acquireOne(intArray, false);   // an empty cycle
-  for (int counter=0; counter<REPEAT_ACQUISITION; counter++) {
+  for (int counter=0; counter<nbRepeat; counter++) {
     acquireOne(intArray, true);
   }
-  
+
   analogWrite(channel, 0);
 }
+
+int diffArray(unsigned int signalArray[], unsigned int backgroundArray[]) {
+  int maxBackground=0;
+  for (int i=0; i<ARRAY_SIZE; i++) {
+    if (backgroundArray[i]>maxBackground) {
+      maxBackground=backgroundArray[i];
+    }
+    if (backgroundArray[i]>signalArray[i]) {
+      signalArray[i]=0;
+    } 
+    else {
+      signalArray[i]-=backgroundArray[i];;
+    }
+  }
+  return maxBackground;
+}
+
+
 
 
 

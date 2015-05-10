@@ -28,7 +28,7 @@ char encoding[]={
 void compress(long value) {
   byte nbDigits=floor(log10(abs(value)));
   int firstDigit=value/(pow(10,nbDigits));
-  int rest=abs(value-firstDigit*pow(10,nbDigits));
+  long rest=abs(value-firstDigit*pow(10,nbDigits));
   byte nbDigitsRest=log10(abs(rest));
   Serial.print(encoding[firstDigit+9]);
   if (nbDigits>0) {
