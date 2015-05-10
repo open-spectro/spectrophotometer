@@ -27,6 +27,12 @@ NIL_THREAD(ThreadMonitoring, arg) {
 
 NIL_THREADS_TABLE_BEGIN()
 
+
+
+
+NIL_THREADS_TABLE_ENTRY(NULL, ThreadSerial, NULL, waThreadSerial, sizeof(waThreadSerial))
+
+
 // First detection otherwise bad initialized variables !!!!
 
 #ifdef THR_ACTION1
@@ -45,8 +51,6 @@ NIL_THREADS_TABLE_ENTRY(NULL, ThreadAction3, NULL, waThreadAction3, sizeof(waThr
 NIL_THREADS_TABLE_ENTRY(NULL, ThreadAction4, NULL, waThreadAction4, sizeof(waThreadAction4))
 #endif
 
-
-NIL_THREADS_TABLE_ENTRY(NULL, ThreadSerial, NULL, waThreadSerial, sizeof(waThreadSerial))
 
 #ifdef THR_MONITORING
 NIL_THREADS_TABLE_ENTRY(NULL, ThreadMonitoring, NULL, waThreadMonitoring, sizeof(waThreadMonitoring))                           

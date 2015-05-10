@@ -37,10 +37,9 @@ void clearArray(unsigned int intArray[]) {
 }
 
 int getMax(int unsigned intArray[], byte smoothing) {
-  byte shift=floor(smoothing/2)+1;
+  byte shift=floor(smoothing/2);
   int currentPoint=0;
   long currentMax=0;
-
   for (int i=shift; i<(ARRAY_SIZE-shift-1); i++) {
     long currentValue=0;
     for (int j=i-shift; j<=i+shift; j++) {

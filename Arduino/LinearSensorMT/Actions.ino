@@ -10,7 +10,15 @@ void fullOn() {
   }
 }
 
+void fullOff() {
+  for (byte i=0; i<sizeof(LEDS); i++) {
+    digitalWrite(LEDS[i], LOW);
+  }
+}
+
+
 void rgbOn() {
+  fullOff();
   Print* output=getOutput();
   unsigned int signalArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
   unsigned int backgroundArray[ARRAY_SIZE];
@@ -30,6 +38,7 @@ void rgbOn() {
 
 
 void testAllColors() {
+  fullOff();
   Print* output=getOutput();
   for (byte i=0; i<sizeof(LEDS); i++) {
     unsigned int signalArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
@@ -45,6 +54,7 @@ void testAllColors() {
 }
 
 void realExperiment() {
+  fullOff();
   Print* output=getOutput();
   // we will use the white led
   // we make a spectrum
@@ -83,6 +93,7 @@ void realExperiment() {
 
 
 void testGreenIntensity() {
+  fullOff();
   int intensity=256;
   for (byte i=0; i<6; i++) {
     unsigned int signalArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
@@ -97,6 +108,7 @@ void testGreenIntensity() {
     intensity/=2;
   }
 }
+
 
 
 
