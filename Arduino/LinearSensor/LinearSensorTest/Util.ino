@@ -5,7 +5,6 @@ void clearArray(unsigned int intArray[]) {
   }
 }
 
-
 int getMax(int unsigned intArray[], byte smoothing) {
   byte shift=floor(smoothing/2)+1;
   int currentPoint=0;

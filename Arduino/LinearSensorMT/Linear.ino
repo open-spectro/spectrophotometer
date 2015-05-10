@@ -5,7 +5,7 @@
 const unsigned char PS_32 = (1 << ADPS2) | (1 << ADPS0);
 const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 
-void initLinear() {
+void setupLinear() {
     // To set up the ADC, first remove bits set by Arduino library, then choose 
   // a prescaler: PS_16, PS_32, PS_64 or PS_128:
   ADCSRA &= ~PS_128;  
