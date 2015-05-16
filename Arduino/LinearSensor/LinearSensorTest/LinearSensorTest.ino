@@ -136,15 +136,3 @@ void testGreenIntensity() {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6084,13 +6084,13 @@ design rules under a new name.</description>
 <attribute name="NAME" x="15.24" y="6.35" size="1.27" layer="25" rot="R270"/>
 <attribute name="VALUE" x="13.335" y="9.8425" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R3" library="resistor" package="M0805" value="10k" x="8.89" y="17.78" smashed="yes" rot="R90">
-<attribute name="NAME" x="7.874" y="16.764" size="1.27" layer="25" rot="R90"/>
-<attribute name="VALUE" x="9.5885" y="12.954" size="1.27" layer="27" rot="R90"/>
+<element name="R3" library="resistor" package="M0805" value="10k" x="33.02" y="2.54" smashed="yes" rot="R270">
+<attribute name="NAME" x="34.036" y="3.556" size="1.27" layer="25" rot="R270"/>
+<attribute name="VALUE" x="32.3215" y="7.366" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R15" library="resistor" package="M0805" value="10k" x="12.7" y="19.05" smashed="yes" rot="R270">
-<attribute name="NAME" x="13.716" y="20.066" size="1.27" layer="25" rot="R270"/>
-<attribute name="VALUE" x="12.319" y="17.526" size="1.27" layer="27" rot="R270"/>
+<element name="R15" library="resistor" package="M0805" value="10k" x="12.7" y="17.78" smashed="yes">
+<attribute name="NAME" x="11.684" y="18.796" size="1.27" layer="25"/>
+<attribute name="VALUE" x="14.224" y="17.399" size="1.27" layer="27"/>
 </element>
 <element name="C3" library="rcl" package="C1206" value="100nF" x="19.05" y="17.78" rot="R180"/>
 <element name="X3" library="lpatiny" package="NX6035" value="16MHz" x="10.16" y="5.08" smashed="yes" rot="R90">
@@ -6152,8 +6152,8 @@ design rules under a new name.</description>
 <wire x1="29.93" y1="4.42" x2="29.93" y2="10.82" width="0" layer="19" extent="1-1"/>
 <wire x1="13.97" y1="14.1" x2="20.45" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="10.16" y1="14.1" x2="13.97" y2="14.1" width="0" layer="19" extent="1-1"/>
-<wire x1="8.89" y1="16.83" x2="10.16" y2="14.1" width="0" layer="19" extent="1-1"/>
-<wire x1="8.08" y1="22.53" x2="8.89" y2="16.83" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="3.49" x2="10.16" y2="14.1" width="0" layer="19" extent="1-1"/>
+<wire x1="8.08" y1="22.53" x2="33.02" y2="3.49" width="0" layer="19" extent="1-1"/>
 <wire x1="18.33" y1="9.22" x2="13.97" y2="14.1" width="0" layer="19" extent="1-1"/>
 <wire x1="20.13" y1="1.82" x2="18.33" y2="9.22" width="0" layer="19" extent="1-1"/>
 <wire x1="3.68" y1="7.62" x2="10.16" y2="14.1" width="0" layer="19" extent="1-1"/>
@@ -6252,7 +6252,7 @@ design rules under a new name.</description>
 <signal name="HWB">
 <contactref element="U$4" pad="33"/>
 <contactref element="R3" pad="2"/>
-<wire x1="8.89" y1="18.73" x2="28.13" y2="1.82" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="1.59" x2="28.13" y2="1.82" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TXLED">
 <contactref element="U$4" pad="22"/>
@@ -6337,7 +6337,7 @@ design rules under a new name.</description>
 <wire x1="10.16" y1="11.3" x2="13.97" y2="11.3" width="0" layer="19" extent="1-1"/>
 <wire x1="6.35" y1="11.2" x2="10.16" y2="11.3" width="0" layer="19" extent="1-1"/>
 <wire x1="2.54" y1="11.2" x2="6.35" y2="11.2" width="0" layer="19" extent="1-1"/>
-<wire x1="12.7" y1="18.1" x2="13.97" y2="11.3" width="0" layer="19" extent="1-1"/>
+<wire x1="13.65" y1="17.78" x2="13.97" y2="11.3" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="D8*">
 <contactref element="U$4" pad="28"/>
@@ -6346,7 +6346,7 @@ design rules under a new name.</description>
 <contactref element="U$4" pad="13"/>
 <contactref element="R15" pad="1"/>
 <contactref element="CON1" pad="RESET"/>
-<wire x1="12.7" y1="20" x2="19.05" y2="20.955" width="0" layer="19" extent="1-1"/>
+<wire x1="11.75" y1="17.78" x2="19.05" y2="20.955" width="0" layer="19" extent="1-1"/>
 <wire x1="18.33" y1="10.82" x2="19.05" y2="20.955" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
