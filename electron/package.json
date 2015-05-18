@@ -1,0 +1,12 @@
+{
+  "name": "spectrophotometer",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "test": "electron ."
+  },
+  "private": true,
+  "devDependencies": {
+    "electron-prebuilt": "^0.26.0"
+  }
+}
