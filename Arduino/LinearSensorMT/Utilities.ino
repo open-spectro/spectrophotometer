@@ -4,6 +4,7 @@
 static void printFreeMemory(Print* output)
 {
   nilPrintUnusedStack(output);
+  output->println("");
 }
 
 
@@ -56,4 +57,5 @@ int getMax(int unsigned intArray[], byte smoothing) {
 Print* getOutput() {
   return &Serial; 
 }
+
 

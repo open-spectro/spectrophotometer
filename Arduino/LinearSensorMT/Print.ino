@@ -103,7 +103,6 @@ void printResult(Print* output, unsigned int intArray[], unsigned int background
   else {
     printNormal(output, intArray); 
   }
-  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 

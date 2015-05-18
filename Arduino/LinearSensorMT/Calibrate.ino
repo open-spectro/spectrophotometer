@@ -33,6 +33,7 @@ void calibrate() {
       break;
     }
   }
+  output->println("");
 }
 
 

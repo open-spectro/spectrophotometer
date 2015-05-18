@@ -32,7 +32,7 @@ void rgbOn() {
   acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 7, getParameter(PARAM_RED_INTENSITY));
-
+output->println("");
 }
 
 
@@ -51,6 +51,7 @@ void testAllColors() {
     diffArray(signalArray, backgroundArray);
     printResult(output, signalArray, backgroundArray, i, currentIntensity);
   }
+  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 void realExperiment() {
@@ -69,7 +70,7 @@ void realExperiment() {
   }
 
   int currentIntensity=autoIntensity(WHITE);
-  
+
   acquire(signalArray);
   analogWrite(WHITE, 0);
   acquire(backgroundArray);
@@ -89,12 +90,13 @@ void realExperiment() {
   acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 6, currentIntensity);
-
+  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 
 void testGreenIntensity() {
   fullOff();
+  Print* output=getOutput();
   int intensity=256;
   for (byte i=0; i<6; i++) {
     unsigned int signalArray[ARRAY_SIZE]; // <-- the array where the readout of the photodiodes is stored, as integers
@@ -108,7 +110,10 @@ void testGreenIntensity() {
     printResult(&Serial, signalArray, backgroundArray, 1, intensity);
     intensity/=2;
   }
+  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
+
+
 
 
 
