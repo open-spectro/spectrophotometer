@@ -8,5 +8,9 @@
   "private": true,
   "devDependencies": {
     "electron-prebuilt": "^0.26.0"
+  },
+  "dependencies": {
+    "cheminfo-spectrophotometer": "0.0.2",
+    "serialport": "^1.7.1"
   }
 }
