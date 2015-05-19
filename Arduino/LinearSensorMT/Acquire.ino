@@ -37,7 +37,7 @@ int autoIntensity(int channel) {
 
 
 void acquire(unsigned int intArray[]) {
-  acquire(intArray, REPEAT_ACQUISITION);
+  acquire(intArray, getParameter(PARAM_NUMBER_SCAN));
 }
 
 void acquire(unsigned int intArray[], byte nbRepeat) {

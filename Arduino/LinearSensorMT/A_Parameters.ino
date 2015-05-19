@@ -23,6 +23,7 @@
 #define PARAM_RED_INTENSITY     4
 #define PARAM_GREEN_INTENSITY   5
 #define PARAM_BLUE_INTENSITY    6
+#define PARAM_NUMBER_SCAN       7
 
 //When parameters are set (and saved) an event is recorded (256-281 : A-Z + .... (if more parameters than 26))
 #define EVENT_SAVE_ALL_PARAMETER     255
