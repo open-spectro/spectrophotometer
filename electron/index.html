@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+<p id="test"></p>
+<script>
+    require('serialport').list(function (err, list) {
+        if (err) {
+            return log(err);
+        }
+        if (list.length === 0) {
+            return log('no device');
+        }
+        var SP = require('cheminfo-spectrophotometer');
+        var sp = new SP(list[0].comName);
+        sp.getHelp().then(log);
+    });
+    function log(msg) {
+        document.getElementById('test').innerText = msg;
+    }
+</script>
+</body>
+</html>
