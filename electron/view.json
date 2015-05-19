@@ -1,0 +1,1659 @@
+{
+  "version": "2.19.3-0",
+  "modules": [
+    {
+      "url": "modules/types/display/fasttable/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "nblines": [
+                20
+              ],
+              "toggle": [
+                null
+              ],
+              "colorjpath": [
+                null
+              ],
+              "filterRow": [
+                null
+              ],
+              "highlightLine": [
+                [
+                  "Yes"
+                ]
+              ]
+            }
+          ],
+          "cols": [
+            [
+              {
+                "name": "ID",
+                "jpath": "element.i",
+                "number": [],
+                "editable": "none"
+              },
+              {
+                "name": "Background",
+                "jpath": "element.background",
+                "number": [],
+                "editable": "none"
+              },
+              {
+                "name": "Analysis",
+                "jpath": "element.analysis",
+                "number": [],
+                "editable": "none"
+              },
+              {
+                "name": "Difference",
+                "jpath": "element.difference",
+                "number": [],
+                "editable": "none"
+              }
+            ]
+          ]
+        }
+      },
+      "id": 1,
+      "vars_in": [
+        {
+          "rel": "list",
+          "name": "debug"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "vars_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "actions_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 110,
+            "top": 0,
+            "right": 0
+          },
+          "size": {
+            "width": 30,
+            "height": 41
+          },
+          "display": false,
+          "title": "Debug information",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        "Admin": {
+          "position": {
+            "left": 144,
+            "top": 34,
+            "right": 0
+          },
+          "size": {
+            "width": 29,
+            "height": 22
+          },
+          "display": true,
+          "title": "Debug information",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      },
+      "title": "Debug information"
+    },
+    {
+      "url": "modules/types/science/spectra/spectra_displayer/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "graphurl": [
+                ""
+              ],
+              "flip": [
+                []
+              ],
+              "displayAxis": [
+                [
+                  "y",
+                  "x"
+                ]
+              ],
+              "grids": [
+                []
+              ],
+              "xLabel": [
+                "nm"
+              ],
+              "yTopSpacing": [
+                "0.1"
+              ],
+              "yBottomSpacing": [
+                "0"
+              ],
+              "xLeftSpacing": [
+                0
+              ],
+              "xRightSpacing": [
+                0
+              ],
+              "yLabel": [
+                "Signal intensity"
+              ],
+              "minX": [
+                ""
+              ],
+              "maxX": [
+                ""
+              ],
+              "minY": [
+                ""
+              ],
+              "maxY": [
+                ""
+              ],
+              "zoom": [
+                "xy"
+              ],
+              "shiftxtozero": [
+                []
+              ],
+              "xaxismodification": [
+                []
+              ],
+              "wheelAction": [
+                "zoomY"
+              ],
+              "wheelbaseline": [
+                0
+              ],
+              "fullOut": [
+                "both"
+              ],
+              "FitYToAxisOnFromTo": [
+                []
+              ],
+              "legend": [
+                "topright"
+              ],
+              "mouseTracking": [
+                [
+                  "track"
+                ]
+              ]
+            }
+          ],
+          "plotinfos": [
+            [
+              {
+                "variable": "backgroundChart",
+                "plotcolor": [
+                  158,
+                  158,
+                  158,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "redChart",
+                "plotcolor": [
+                  255,
+                  12,
+                  16,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "greenChart",
+                "plotcolor": [
+                  0,
+                  194,
+                  23,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "blueChart",
+                "plotcolor": [
+                  1,
+                  1,
+                  255,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "whiteChart",
+                "plotcolor": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "referenceChart",
+                "plotcolor": [
+                  211,
+                  211,
+                  211,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "experimentChart",
+                "plotcolor": [
+                  160,
+                  160,
+                  160,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "rgbChart",
+                "plotcolor": [
+                  255,
+                  0,
+                  203,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "3",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              }
+            ]
+          ]
+        }
+      },
+      "id": 2,
+      "vars_in": [
+        {
+          "rel": "xyArray",
+          "name": "backgroundChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "redChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "greenChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "blueChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "whiteChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "referenceChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "experimentChart"
+        },
+        {
+          "rel": "xyArray",
+          "name": "resultChart"
+        },
+        {
+          "rel": "annotations",
+          "name": "annotations"
+        },
+        {
+          "rel": "xyArray",
+          "name": "rgbChart"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "vars_out": [
+        {
+          "event": "onTrackMouse",
+          "rel": "trackData",
+          "jpath": [],
+          "name": "tracking"
+        }
+      ],
+      "actions_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 0,
+            "top": 16,
+            "right": 0
+          },
+          "size": {
+            "width": 94,
+            "height": 33
+          },
+          "display": true,
+          "title": "Spectra",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            [
+              255,
+              255,
+              255,
+              0
+            ]
+          ]
+        },
+        "Admin": {
+          "position": {
+            "left": 0,
+            "top": 16,
+            "right": 0
+          },
+          "size": {
+            "width": 94,
+            "height": 29
+          },
+          "display": true,
+          "title": "Spectra",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            [
+              255,
+              255,
+              255,
+              0
+            ]
+          ]
+        }
+      },
+      "title": "Spectra"
+    },
+    {
+      "url": "modules/types/edition/onde/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "hasButton": [
+                [
+                  "onload"
+                ]
+              ],
+              "button_text": [
+                "Apply"
+              ],
+              "debouncing": [
+                0
+              ],
+              "output": [
+                "new"
+              ],
+              "mode": [
+                "schema"
+              ],
+              "schemaSource": [
+                "config"
+              ],
+              "schema": [
+                "{\n    \"type\": \"object\",\n    \"properties\": {\n        \"smooth\": {\n            \"type\": \"number\",\n            \"label\": \"Smooth\",\n            \"default\": 8\n        },\n        \"normalize\": {\n            \"type\": \"boolean\",\n            \"label\": \"Normalize\"\n        }\n    }\n}"
+              ]
+            }
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 61,
+            "top": 0
+          },
+          "size": {
+            "width": 33,
+            "height": 11
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "Filter",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 61,
+            "top": 0
+          },
+          "size": {
+            "width": 33,
+            "height": 15
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "Untitled",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        }
+      },
+      "id": 3,
+      "vars_in": [
+        {}
+      ],
+      "actions_in": {},
+      "title": "Filter",
+      "vars_out": [
+        {
+          "event": "onFormSubmit",
+          "rel": "outputValue",
+          "jpath": [],
+          "name": "options"
+        }
+      ],
+      "actions_out": [
+        {
+          "jpath": []
+        }
+      ]
+    },
+    {
+      "url": "modules/types/display/template-twig/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "template": [
+                "<table>\n    <tr>\n        <th>Chart</th>\n        <th>Wavelength (nm)</th>\n        <th>Intensity</th>\n    </tr>\n    {% for key, value in tracking %}\n    <tr>\n     <td>{{key}}</td>\n     <td>{{value.xBefore|number_format(0)}}</td>\n     <td>{{value.yBefore|number_format(2)}}</td>\n{% endfor %} \n</tr>\n</table>\n\n    "
+              ]
+            }
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 95,
+            "top": 16
+          },
+          "size": {
+            "width": 54,
+            "height": 26
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 96,
+            "top": 59
+          },
+          "size": {
+            "width": 35,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        }
+      },
+      "id": 4,
+      "vars_in": [
+        {
+          "rel": "value",
+          "name": "tracking"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "title": "",
+      "vars_out": [],
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/science/spectra/spectra_displayer/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "graphurl": [
+                ""
+              ],
+              "flip": [
+                []
+              ],
+              "displayAxis": [
+                [
+                  "y",
+                  "x"
+                ]
+              ],
+              "grids": [
+                []
+              ],
+              "xLabel": [
+                "nm"
+              ],
+              "yTopSpacing": [
+                "0.1"
+              ],
+              "yBottomSpacing": [
+                0
+              ],
+              "xLeftSpacing": [
+                0
+              ],
+              "xRightSpacing": [
+                0
+              ],
+              "yLabel": [
+                "Relative intensity (blank / experiment)"
+              ],
+              "minX": [
+                ""
+              ],
+              "maxX": [
+                ""
+              ],
+              "minY": [
+                ""
+              ],
+              "maxY": [
+                ""
+              ],
+              "zoom": [
+                "xy"
+              ],
+              "shiftxtozero": [
+                []
+              ],
+              "xaxismodification": [
+                []
+              ],
+              "wheelAction": [
+                "zoomY"
+              ],
+              "wheelbaseline": [
+                0
+              ],
+              "fullOut": [
+                "both"
+              ],
+              "FitYToAxisOnFromTo": [
+                []
+              ],
+              "legend": [
+                "topleft"
+              ],
+              "mouseTracking": [
+                [
+                  "track"
+                ]
+              ]
+            }
+          ],
+          "plotinfos": [
+            [
+              {
+                "variable": "backgroundChart",
+                "plotcolor": [
+                  158,
+                  158,
+                  158,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "redChart",
+                "plotcolor": [
+                  255,
+                  12,
+                  16,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "greenChart",
+                "plotcolor": [
+                  0,
+                  194,
+                  23,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "blueChart",
+                "plotcolor": [
+                  1,
+                  1,
+                  255,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              },
+              {
+                "variable": "whiteChart",
+                "plotcolor": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "strokewidth": "2",
+                "strokestyle": "1",
+                "plotcontinuous": "continuous",
+                "peakpicking": [],
+                "markers": [],
+                "normalize": "none",
+                "optimizeSlots": [],
+                "degrade": 0,
+                "monotoneous": []
+              }
+            ]
+          ]
+        }
+      },
+      "id": 5,
+      "vars_in": [
+        {
+          "rel": "xyArray",
+          "name": "resultChart"
+        },
+        {
+          "rel": "annotations",
+          "name": "annotations"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "vars_out": [
+        {
+          "event": "onTrackMouse",
+          "rel": "trackData",
+          "jpath": [],
+          "name": "tracking"
+        }
+      ],
+      "actions_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 0,
+            "top": 50,
+            "right": 0
+          },
+          "size": {
+            "width": 94,
+            "height": 28
+          },
+          "display": true,
+          "title": "Result of ratio between blank and experimental",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            [
+              255,
+              255,
+              255,
+              0
+            ]
+          ]
+        },
+        "Admin": {
+          "position": {
+            "left": 0,
+            "top": 46,
+            "right": 0
+          },
+          "size": {
+            "width": 94,
+            "height": 29
+          },
+          "display": true,
+          "title": "Result of ratio between blank and experimental",
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer",
+          "bgColor": [
+            [
+              255,
+              255,
+              255,
+              0
+            ]
+          ]
+        }
+      },
+      "title": "Result of ratio between blank and experimental"
+    },
+    {
+      "url": "modules/types/edition/object_editor/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "editable": [
+                "view"
+              ],
+              "expanded": [
+                []
+              ],
+              "storeObject": [
+                []
+              ],
+              "displayValue": [
+                []
+              ],
+              "output": [
+                "new"
+              ],
+              "storedObject": [
+                "{}"
+              ]
+            }
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 144,
+            "top": 43
+          },
+          "size": {
+            "width": 20,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": false,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 132,
+            "top": 59
+          },
+          "size": {
+            "width": 39,
+            "height": 40
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 6,
+      "vars_in": [
+        {
+          "rel": "value",
+          "name": "spectra"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "vars_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "title": "",
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/client_interaction/code_executor/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "display": [
+                [
+                  "editor",
+                  "buttons"
+                ]
+              ],
+              "script": [
+                "console.clear();\n\nconsole.log('parse')\n\n// we can specify the frequencies of the reference leds\nvar referenceWaves={\n    red: 630,\n    green: 535,\n    blue: 475\n}\n\nvar infos=API.getData(\"chartInfos\");\n\n\nvar x=[];\n\n// takes wavelength in nm and returns an rgba value\nfunction wavelengthToColor(wavelength) {\n    var r,\n        g,\n        b,\n        alpha,\n        colorSpace,\n        wl = wavelength,\n        gamma = 1;\n\n\n    if (wl >= 380 && wl < 440) {\n        R = -1 * (wl - 440) / (440 - 380);\n        G = 0;\n        B = 1;\n   } else if (wl >= 440 && wl < 490) {\n       R = 0;\n       G = (wl - 440) / (490 - 440);\n       B = 1;  \n    } else if (wl >= 490 && wl < 510) {\n        R = 0;\n        G = 1;\n        B = -1 * (wl - 510) / (510 - 490);\n    } else if (wl >= 510 && wl < 580) {\n        R = (wl - 510) / (580 - 510);\n        G = 1;\n        B = 0;\n    } else if (wl >= 580 && wl < 645) {\n        R = 1;\n        G = -1 * (wl - 645) / (645 - 580);\n        B = 0.0;\n    } else if (wl >= 645 && wl <= 780) {\n        R = 1;\n        G = 0;\n        B = 0;\n    } else {\n        R = 0;\n        G = 0;\n        B = 0;\n    }\n\n    // intensty is lower at the edges of the visible spectrum.\n    if (wl > 780 || wl < 380) {\n        alpha = 0;\n    } else if (wl > 700) {\n        alpha = (780 - wl) / (780 - 700);\n    } else if (wl < 420) {\n        alpha = (wl - 380) / (420 - 380);\n    } else {\n        alpha = 1;\n    }\n\n    colorSpace = [\"rgba(\" + (R * 100) + \"%,\" + (G * 100) + \"%,\" + (B * 100) + \"%, \" + alpha + \")\", R, G, B, alpha]\n\n    // colorSpace is an array with 5 elements.\n    // The first element is the complete code as a string.  \n    // Use colorSpace[0] as is to display the desired color.  \n    // use the last four elements alone or together to access each of the individual r, g, b and a channels.  \n   \n    return colorSpace;\n   \n}\n\n\nfunction parseSpectra(text) {\n    var blocs=text.split(/[\\r\\n]*>/m);\n    var results=[];\n    for (var part=0; part<blocs.length; part++) {\n        var bloc=blocs[part];\n        var result=[];\n        var lines=bloc.split(/[\\r\\n]+/);\n        // first line is the info line\n        var info=lines[0];\n        if (info && info.match(/^[A-Z]/)) {\n            var result=parseInfo(info);\n            result.data=parseData(lines.slice(1));\n            results.push(result);\n        }\n        \n    }\n    return results;\n}\n\nvar difference=['r','q','p','o','n','m','l','k','j','%','J','K','L','M','N','O','P','Q','R'];\n\nfunction parseData(lines) {\n    var data=[];\n    var currentValue=0;\n    for (var i=0; i<lines.length; i++) {\n      var line=lines[i];\n      var fields=lines[i].split(/( ?(?=[a-zA-Z%])| +(?=[^a-zA-Z%]))/);\n      for (var j=0; j<fields.length; j++) {\n          var field=fields[j];\n          if (field.trim().length>0) {\n              // we check if we convert the first character\n              if (field.match(/^[j-rJ-R%]/)) {\n                  var firstChar=field.substring(0,1);\n                  var value=difference.indexOf(firstChar)-9;\n                  currentValue+=(value+field.substr(1))>>0;\n              } else {\n                  currentValue=fields[j]>>0;\n              }\n               data.push(currentValue);\n          }\n      }\n    }\n    return data;\n}\n\n\nfunction parseInfo(info) {\n    var result={};\n    var fields=info.split(\",\");\n    result.type=fields[0];\n    for (var i=1; i<fields.length; i++) {\n        var field=fields[i];\n        var fieldType=field.replace(/^([A-Z]*)(.*)$/,\"$1\");\n        var fieldValue=field.replace(/^([A-Z]*)(.*)$/,\"$2\");\n        switch(fieldType) {\n            case 'I':\n                result.intensity=fieldValue>>0;\n                result.percentIntensity=Math.round(((fieldValue>>0)/256)*100);\n                break;\n            case 'RGB':\n                var values=fieldValue.split(\"/\");\n                result.redPoint=values[0]>>0;\n                result.greenPoint=values[1]>>0;\n                result.bluePoint=values[2]>>0;\n                break;\n            case 'BG':\n                var values=fieldValue.split(\"/\");\n                result.backgroundMin=values[0]>>0;\n                result.backgroundMax=values[1]>>0;\n                break;\n            default:\n                result[fieldType]=fieldValue;\n        }\n    }\n    return result;\n}\n\n\nvar spectra=parseSpectra(get(\"data\"));\nvar options=get(\"options\") || {};\n\n\nfunction calculateCorrections(background, white) {\n    var corrections=[];\n    for (var i=0; i<background.length; i++) {\n        var correction={};\n        correction.a=1/(white[i]-background[i]);\n        correction.b=white[i]/(background[i]-white[i])+1;\n        corrections.push(correction);\n    }\n    return corrections;\n}\n\nfunction applyCorrections(corrections, data) {\n    var results=[];\n    for (var i=0; i<data.length; i++) {\n        var correction=corrections[i];\n        var result=correction.a*data[i]+correction.b;\n        results.push(result);\n    }\n    return results;\n}\n\nfunction ratio(experiment, reference) {\n    var results=[];\n    for (var i=0; i<experiment.length; i++) {\n        var result=reference[i]/experiment[i];\n        results.push(result);\n    }\n    return results;\n}\n\n// this method returns a new array of length-nbPixels+1 size\nfunction smooth(spectrum, nbPixels) {\n    var result=[];\n    var array=spectrum.data;\n    var shift=Math.floor(nbPixels/2);\n\n    for (var i=shift; i<(array.length-shift-1); i++) {\n        var average=0;\n        for (var j=i-shift; j<=i+shift; j++) {\n          average+=array[j];\n        }\n        result.push(average/nbPixels)\n    }\n  \n    spectrum.data=result;\n    spectrum.smooth=nbPixels;\n    // need to shift the reference point\n    spectrum.redPoint-=shift;\n    spectrum.bluePoint-=shift;\n    spectrum.greenPoint-=shift;\n}\n\nfunction normalize(array) {\n    var min=Number.MAX_VALUE;\n    var max=Number.MIN_VALUE;\n    for (var i=0; i<array.length; i++) {\n        if (array[i]<min) min=array[i];\n        if (array[i]>max) max=array[i];\n    }\n    if (min!=max) {\n        for (var i=0; i<array.length; i++) {\n            array[i]=(array[i]-min)/(max-min);\n        }\n    } else {\n        for (var i=0; i<array.length; i++) {\n            array[i]=0.5;\n        }\n    }\n    return array;\n}\n\nfunction getAnnotation(pixel, color, height) {\n    return {\n        \"pos2\": {\n          \"y\": height+\"px\",\n          \"x\": pixel-1\n        },\n        \"fillColor\": color,\n        \"type\": \"rect\",\n        \"pos\": {\n          \"y\": \"0px\",\n          \"x\": pixel+2\n        }\n    };\n}\n\nfunction getAnnotations(spectrum) {\n    var annotations=[];\n    annotations.push(getAnnotation(referenceWaves.red,\"red\",15));\n    annotations.push(getAnnotation(referenceWaves.blue,\"blue\",15));\n    annotations.push(getAnnotation(referenceWaves.green,\"green\",15));\n    \n    var diffPoints=spectrum.redPoint-spectrum.bluePoint;\n    var diffNM=(referenceWaves.red-referenceWaves.blue)/(diffPoints-1);\n    var length=spectrum.data.length;\n    \n    // we will add all the color spectrum\n    // need to guess the nm of the first point and last point\n    var firstNM=referenceWaves.blue-spectrum.bluePoint*diffNM;\n    var lastNM=referenceWaves.red+(length-spectrum.redPoint)*diffNM;\n    x=[];\n    for (var i=0; i<length; i++) {\n        var wavelength=firstNM+(lastNM-firstNM)/(length-1)*i;\n        x.push(wavelength);\n        var color=wavelengthToColor(wavelength)[0];\n        annotations.push(getAnnotation(wavelength,color,10));\n    }\n    return annotations;\n}\n\n\nvar experimental;\nvar reference;\n\nfor (var i=0; i<spectra.length; i++) {\n    var spectrum=spectra[i];\n    var type=spectrum.type;\n    if (type=='Z') reference=spectrum;\n    if (type=='E') experimental=spectrum;\n}\n\n// if we have \"Z\" and \"E\" we calculate the ratio\nif (reference && experimental) {\n    spectra.push({\n        type:\"Y\",\n        redPoint: reference.redPoint,\n        greenPoint: reference.greenPoint,\n        bluePoint: reference.bluePoint,\n        data: ratio(experimental.data, reference.data)\n    })\n}\n\nif (options.smooth) {\n    for (var i=0; i<spectra.length; i++) {\n        smooth(spectra[i], options.smooth);\n    }\n}\n\nif (options.normalize) {\n    for (var i=0; i<spectra.length; i++) {\n        spectra[i].data==normalize(spectra[i].data);\n    }\n  \n}\n\n\nvar annotations=getAnnotations(spectra[0]);\n\n\nfor (var i=0; i<spectra.length; i++) {\n    var spectrum=spectra[i];\n    var type=spectrum.type;\n    var chartName=infos[type].chartName;\n    var data=[];\n    for (var j=0; j<spectrum.data.length; j++) {\n        data.push(x[j]);\n        data.push(spectrum.data[j]);\n    }\n    API.createData(chartName, data)\n}\n\n\nAPI.createData(\"annotations\", annotations);\n\nAPI.createData(\"spectra\", spectra);\n"
+              ]
+            }
+          ],
+          "libs": [
+            [
+              {}
+            ]
+          ],
+          "buttons": [
+            [
+              {
+                "name": "execute",
+                "label": "Execute"
+              }
+            ]
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 123,
+            "top": 37
+          },
+          "size": {
+            "width": 20,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": false,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 95,
+            "top": 0
+          },
+          "size": {
+            "width": 48,
+            "height": 58
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 7,
+      "vars_in": [
+        {
+          "rel": "inputValue",
+          "name": "data"
+        },
+        {
+          "rel": "inputValue",
+          "name": "options"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "title": "",
+      "vars_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/edition/object_editor/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "editable": [
+                "text"
+              ],
+              "expanded": [
+                []
+              ],
+              "storeObject": [
+                [
+                  "expand"
+                ]
+              ],
+              "displayValue": [
+                []
+              ],
+              "output": [
+                "new"
+              ],
+              "storedObject": [
+                "{\"R\":{\"label\":\"Red\",\"chartName\":\"redChart\"},\"G\":{\"label\":\"Green\",\"chartName\":\"greenChart\"},\"B\":{\"label\":\"Blue\",\"chartName\":\"blueChart\"},\"W\":{\"label\":\"White\",\"chartName\":\"whiteChart\"},\"U\":{\"label\":\"UV\",\"chartName\":\"uvChart\"},\"Z\":{\"label\":\"Reference\",\"chartName\":\"referenceChart\"},\"E\":{\"label\":\"Experiment\",\"chartName\":\"experimentChart\"},\"Y\":{\"label\":\"Result\",\"chartName\":\"resultChart\"},\"A\":{\"label\":\"Result\",\"chartName\":\"rgbChart\"}}"
+              ]
+            }
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 122,
+            "top": 1
+          },
+          "size": {
+            "width": 20,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": false,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 144,
+            "top": 0
+          },
+          "size": {
+            "width": 31,
+            "height": 31
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 8,
+      "vars_in": [
+        {}
+      ],
+      "actions_in": [
+        {}
+      ],
+      "vars_out": [
+        {
+          "event": "onObjectChange",
+          "rel": "output",
+          "jpath": [],
+          "name": "chartInfos"
+        }
+      ],
+      "title": "",
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/client_interaction/code_executor/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "display": [
+                [
+                  "buttons"
+                ]
+              ],
+              "script": [
+                "var infos=API.getData(\"chartInfos\");\nfor (var key in infos) {\n    API.createData(infos[key].chartName);\n}\n\n"
+              ]
+            }
+          ],
+          "libs": [
+            [
+              {}
+            ]
+          ],
+          "buttons": [
+            [
+              {
+                "name": "clear",
+                "label": "Clear charts"
+              }
+            ]
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 81,
+            "top": 9
+          },
+          "size": {
+            "width": 13,
+            "height": 6
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": false,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 59,
+            "top": 76
+          },
+          "size": {
+            "width": 27,
+            "height": 9
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 9,
+      "vars_in": [
+        {}
+      ],
+      "actions_in": [
+        {}
+      ],
+      "title": "",
+      "vars_out": [
+        {
+          "jpath": []
+        }
+      ],
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/client_interaction/code_executor/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "display": [
+                [
+                  "buttons",
+                  "editor"
+                ]
+              ],
+              "script": [
+                "setAsync();\n\nvar spectro = API.cache('spectro');\n\nif (!spectro) {\n    return error('no spectro');\n}\n\nspectro.test().then(function (result) {\n    console.log('result: ' + result)\n    API.createData('data', result)\n    done();\n}, error);\n\nfunction error(msg) {\n    console.error('error: ' + msg);\n    API.createData('error', msg);\n    done();\n}"
+              ]
+            }
+          ],
+          "libs": [
+            [
+              {}
+            ]
+          ],
+          "buttons": [
+            [
+              {
+                "name": "button1",
+                "label": "Execute"
+              }
+            ]
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 95,
+            "top": 43
+          },
+          "size": {
+            "width": 52,
+            "height": 35
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 22,
+            "top": 2
+          },
+          "size": {
+            "width": 22,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": false,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": false,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 10,
+      "vars_in": [
+        {}
+      ],
+      "actions_in": [
+        {}
+      ],
+      "title": "",
+      "vars_out": [
+        {
+          "event": "onScriptEnded",
+          "rel": "outputValue",
+          "jpath": [
+            "result"
+          ],
+          "name": "data"
+        }
+      ],
+      "actions_out": []
+    },
+    {
+      "url": "modules/types/display/single_value/",
+      "configuration": {
+        "sections": {},
+        "groups": {
+          "group": [
+            {
+              "defaultvalue": [
+                null
+              ],
+              "font": [
+                null
+              ],
+              "fontcolor": [
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "fontsize": [
+                null
+              ],
+              "align": [
+                null
+              ],
+              "valign": [
+                null
+              ],
+              "sprintf": [
+                null
+              ],
+              "sprintfOrder": [
+                null
+              ],
+              "preformatted": [
+                []
+              ],
+              "append": [
+                []
+              ],
+              "maxEntries": [
+                1
+              ]
+            }
+          ]
+        }
+      },
+      "layers": {
+        "Default layer": {
+          "position": {
+            "left": 148,
+            "top": 43
+          },
+          "size": {
+            "width": 41,
+            "height": 35
+          },
+          "zIndex": 0,
+          "display": true,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Default layer"
+        },
+        "Admin": {
+          "position": {
+            "left": 0,
+            "top": 0
+          },
+          "size": {
+            "width": 20,
+            "height": 20
+          },
+          "zIndex": 0,
+          "display": false,
+          "title": "",
+          "bgColor": [
+            255,
+            255,
+            255,
+            0
+          ],
+          "wrapper": true,
+          "created": true,
+          "name": "Admin"
+        }
+      },
+      "id": 11,
+      "vars_in": [
+        {
+          "rel": "value",
+          "name": "data"
+        }
+      ],
+      "actions_in": [
+        {}
+      ],
+      "title": "",
+      "vars_out": [],
+      "actions_out": []
+    }
+  ],
+  "variables": [
+    {
+      "varname": "version",
+      "jpath": [
+        "version"
+      ]
+    },
+    {
+      "varname": "modules",
+      "jpath": [
+        "modules"
+      ]
+    },
+    {
+      "varname": "variables",
+      "jpath": [
+        "variables"
+      ]
+    },
+    {
+      "varname": "pouchvariables",
+      "jpath": [
+        "pouchvariables"
+      ]
+    },
+    {
+      "varname": "configuration",
+      "jpath": [
+        "configuration"
+      ]
+    }
+  ],
+  "pouchvariables": [
+    {}
+  ],
+  "configuration": {
+    "title": "No title"
+  },
+  "grid": {
+    "layers": {
+      "Default layer": {
+        "name": "Default layer"
+      },
+      "Admin": {
+        "name": "Admin"
+      }
+    },
+    "xWidth": 10,
+    "yHeight": 10
+  },
+  "aliases": [
+    {}
+  ],
+  "actionscripts": [
+    {
+      "sections": {},
+      "groups": {
+        "action": [
+          {
+            "name": [
+              null
+            ],
+            "script": [
+              null
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "couch_replication": [
+    {
+      "sections": {},
+      "groups": {
+        "couch": [
+          [
+            {
+              "direction": "both",
+              "continuous": []
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "init_script": [
+    {
+      "sections": {},
+      "groups": {
+        "general": [
+          {
+            "script": [
+              "if (require.node) {\n    console.log('in electron');\n    var serialPort = require.node('serialport');\n    serialPort.list(function (err, list) {\n        if (err || list.length === 0) {\n            return error('no serial device found');\n        }\n        var comName;\n        for (var i = 0; i < list.length; i++) {\n            if (list[i].manufacturer.match(/arduino/i)) {\n                comName = list[i].comName;\n                console.log('found an arduino: ' + comName);\n                break;\n            }\n        }\n        if (!comName) {\n            return error('no arduino found');\n        }\n        \n        var Spectro = require.node('cheminfo-spectrophotometer');\n        var spectro = new Spectro(comName);\n        API.cache('spectro', spectro)\n        init_deferred.resolve();\n    });\n} else {\n    error('not in electron');\n}\n\nfunction error(msg) {\n    console.error('error: ' + msg);\n    API.createData('error', msg);\n    init_deferred.resolve();\n}"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "custom_filters": [
+    {
+      "sections": {
+        "modules": [
+          {
+            "sections": {},
+            "groups": {
+              "modules": [
+                [
+                  {}
+                ]
+              ]
+            }
+          }
+        ],
+        "filtersLib": [
+          {
+            "sections": {},
+            "groups": {
+              "filters": [
+                [
+                  {}
+                ]
+              ]
+            }
+          }
+        ],
+        "filters": [
+          {
+            "sections": {},
+            "groups": {
+              "filter": [
+                {
+                  "name": [
+                    null
+                  ],
+                  "script": [
+                    null
+                  ]
+                }
+              ],
+              "libs": [
+                [
+                  {}
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "groups": {}
+    }
+  ],
+  "actionfiles": [
+    {
+      "sections": {},
+      "groups": {
+        "action": [
+          [
+            {}
+          ]
+        ]
+      }
+    }
+  ]
+}

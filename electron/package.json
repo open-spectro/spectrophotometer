@@ -10,7 +10,7 @@
     "electron-prebuilt": "^0.26.0"
   },
   "dependencies": {
-    "cheminfo-spectrophotometer": "0.0.2",
+    "cheminfo-spectrophotometer": "0.0.3",
     "serialport": "^1.7.1"
   }
 }
