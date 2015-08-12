@@ -100,10 +100,6 @@ function log(msg) {
 }
 
 
-var is_on = false;
-
-console.log(document.querySelectorAll('button'))
-
 var nodes=document.querySelectorAll('button');
 for (var i=0; i<nodes.length; i++) {
   nodes[i].addEventListener('click', function() {
@@ -111,5 +107,3 @@ for (var i=0; i<nodes.length; i++) {
     buffer.innerHTML='Instruction: '+this.innerHTML+' sent.';
   });
 }
-
-
