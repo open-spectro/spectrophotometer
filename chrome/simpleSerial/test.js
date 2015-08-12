@@ -10,7 +10,7 @@ function showReceiveResult(result) {
 }
 
 
-
+// TODO need to add for windows and linux computer ...
 var matchRegexp=/tty.usbmodem/;
 
 
