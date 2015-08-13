@@ -3,22 +3,16 @@ console.log("In iframe");
 var messages={};
 var messageID=0;
 
-var appWindow, appOrigin;
-
 
 function postMessage(action, data, callback) {
     console.log("POST MESSAGE");
-    if (!appWindow || !appOrigin) {
-        console.log('Don\'t know where to send messages to, app hasn\'t initialized us yet.');
-        return;
-    }
     messageID++;
-    appWindow.postMessage(
+    window.parent.postMessage(
         {
             action: action,
             messageID:messageID,
             message: data
-        }, appOrigin
+        }, "*"
     );
     messages[messageID]={
         action:action,
@@ -31,13 +25,13 @@ function postMessage(action, data, callback) {
 var result=document.getElementById('result');
 function logResult(event) {
     console.log(event.data);
-  //  result.innerHTML="Event received in call back\r\n";
+    result.innerHTML="Event received in call back\r\n";
     console.log("CALLBACK");
     console.log(JSON.stringify(event.data,{},3))
-    //result.innerHTML+=JSON.stringify(event.data,{},3)+"\r\n";
-    //result.innerHTML+="---------------\r\b";
-    //result.innerHTML+=event.data.data;
-    //result.innerHTML+="---------------\r\n";
+    result.innerHTML+=JSON.stringify(event.data,{},3)+"\r\n";
+    result.innerHTML+="---------------\r\b";
+    result.innerHTML+=event.data.data;
+    result.innerHTML+="---------------\r\n";
 }
 
 
@@ -45,10 +39,6 @@ window.addEventListener("message", receiveMessage, false);
 function receiveMessage(event) {
     console.log("RECEIVE event in IFRAME")
     console.log(event.data);
-    if (!appWindow || !appOrigin) {
-        appWindow = event.source;
-        appOrigin = event.origin;
-    }
     var messageID=event.data.messageID;
     if (messages[messageID] && messages[messageID].callback) {
         console.log("In call back");

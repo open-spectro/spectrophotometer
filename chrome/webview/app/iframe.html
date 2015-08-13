@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, textarea {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body frameborder="0" style="overflow:hidden" height="100%" width="100%">
+
+XXXX
+
+<script>
+    var appWindow, appOrigin;
+
+    window.setInterval(function() {console.log("Hello")}, 2000)
+
+    console.log("EMBED")
+
+    window.onmessage = function(event) {
+
+        console.log("Receiving an event ...");
+        console.log(event);
+        console.log(event.origin);
+
+        if (event.origin.indexOf('chrome-extension://') != 0) {
+            return;
+        }
+
+        // first message, store appWindow and appOrigin
+        if (!appWindow || !appOrigin) {
+            appWindow = event.source;
+            appOrigin = event.origin;
+        }
+
+        console.log(appWindow);
+        console.log(appOrigin);
+
+        messageApp('ok','well received')
+
+    }
+
+
+
+    function messageApp(type, param) {
+        if (!appWindow || !appOrigin) {
+            log('Don\'t know where to send messages to, app hasn\'t initialized us yet.');
+            return;
+        }
+        console.log("Posting message to the parent");
+
+
+        appWindow.postMessage({type: type, param: param}, appOrigin);
+        console.log("Posting done");
+    }
+
+</script>
+
+</body>
+</html>

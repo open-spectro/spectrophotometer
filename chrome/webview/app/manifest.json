@@ -30,12 +30,7 @@
         }
       ]
     }
-  ],
-  "sandbox": {
-    "pages": [
-      "wrap.html"
-    ]
-  }
+  ]
 }
 
 

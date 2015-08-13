@@ -1,7 +1,7 @@
 var matchRegexp = /tty.usbmodem/;
 
 var connection = new SerialConnection();
-var iframeWindow=document.getElementById('iframe').contentWindow;
+var webviewWindow;
 
 connection.getDevice(matchRegexp, function(path) {
     connection.connect(path);
@@ -9,34 +9,53 @@ connection.getDevice(matchRegexp, function(path) {
 
 connection.onReceiveCompleted.addListener(function(message) {
     console.log(message);
-    iframeWindow.postMessage(message, "*");
+    webviewWindow.postMessage(message, "*");
 });
 
 connection.onConnect.addListener(function() {
-    log('connected');
+    if (webviewWindow) {
+        log('connected');
+    } else {
+        console.log('connected');
+    }
 });
 
 connection.onReadLine.addListener(function(line) {
-    log('read line: ' + line);
+    if (webviewWindow) {
+        log('read line: ' + line);
+    } else {
+        console.log('read line: ' + line);
+    }
+});
+
+
+document.getElementById('webview').addEventListener("contentload", function () {
+    console.log("Content loaded");
+    try{
+        webviewWindow=webview.contentWindow;
+        console.log(webviewWindow);
+        console.log("Trying to post message");
+        webviewWindow.postMessage("Message from Chrome APP!", "*");
+    }catch(error){
+        console.log("postMessage error: " + error);
+    }
+
 });
 
 
 function log(message) {
-    iframeWindow.postMessage({
+    webviewWindow.postMessage({
         status: 'ok',
         message: message
     }, "*");
 }
 
 
-
-
 window.addEventListener("message", receiveMessage, false);
 
 function receiveMessage(event) {
-    console.log("event received in the WINDOW");
+    console.log("Main window received a message:");
     var data = event.data;
-    console.log("------------------")
     console.log(data);
     switch (data.action) {
         case "send":
@@ -44,4 +63,3 @@ function receiveMessage(event) {
             break;
     }
 }
-

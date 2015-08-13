@@ -1,3 +1,11 @@
+
+
+window.setTimeout(function() {
+    console.log(document.getElementById('iframe'));
+    console.log(document.getElementById('iframe').contentWindow);
+},1000)
+
+
 var iframeWindow=document.getElementById('iframe').contentWindow;
 var parentWindow=window.parent;
 
