@@ -1,4 +1,3 @@
-const DEVICE_PATH = '/dev/tty.usbmodem1421';
 const serial = chrome.serial;
 
 /* Interprets an ArrayBuffer as UTF-8 encoded string data. */
@@ -16,17 +15,27 @@ var str2ab = function(str) {
   return bytes.buffer;
 };
 
+var now = function() {
+  return (new Date).getTime();
+}
+
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 
 var SerialConnection = function() {
   this.connectionId = -1;
   this.lineBuffer = "";
+  this.fullBuffer = "";
+  this.sendCommand = "";
   this.boundOnReceive = this.onReceive.bind(this);
   this.boundOnReceiveError = this.onReceiveError.bind(this);
   this.onConnect = new chrome.Event();
   this.onReadLine = new chrome.Event();
   this.onError = new chrome.Event();
+  this.receivingTimeout = 5000;
+  this.sendTime; // receiving data till it contains a double CR LF
+  this.sendMessageID;
+  this.onReceiveCompleted = new chrome.Event();
 };
 
 SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
@@ -46,12 +55,26 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
   }
 
   this.lineBuffer += ab2str(receiveInfo.data);
+  this.fullBuffer += ab2str(receiveInfo.data);
 
   var index;
   while ((index = this.lineBuffer.indexOf('\n')) >= 0) {
     var line = this.lineBuffer.substr(0, index + 1);
     this.onReadLine.dispatch(line);
     this.lineBuffer = this.lineBuffer.substr(index + 1);
+  }
+
+  if (this.fullBuffer.match(/(\r\n?\r\n?|\n\n)/)) {
+    this.onReceiveCompleted.dispatch(
+        {
+          'status': 'ok',
+          'messageID': this.sendMessageID,
+          'command' : this.sendCommand,
+          'data': this.fullBuffer
+        });
+    this.sendTime = null;
+    this.lineBuffer = "";
+    this.fullBuffer = "";
   }
 };
 
@@ -62,13 +85,56 @@ SerialConnection.prototype.onReceiveError = function(errorInfo) {
 };
 
 SerialConnection.prototype.connect = function(path) {
-  serial.connect(path, this.onConnectComplete.bind(this))
+  serial.connect(path, {
+    bitrate: 115200
+  }, this.onConnectComplete.bind(this))
 };
 
-SerialConnection.prototype.send = function(msg) {
+SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
+    serial.getDevices(
+        function (devices) {
+          var matchDevices=[];
+          for (var i=0; i<devices.length; i++) {
+            if (devices[i].path.match(matchRegexp)) {
+              matchDevices.push(devices[i].path)
+            }
+          }
+          if (matchDevices.length===0) {
+            console.log(listDevices);
+            throw new Error('No spectrophotometer found !');
+          } else if (matchDevices.length>1) {
+            console.log(matchDevices);
+            throw new Error('More than one device found !');
+          } else {
+            callback(matchDevices[0]);
+          }
+        }
+    );
+}
+
+SerialConnection.prototype.send = function(msg, sendMessageID) {
   if (this.connectionId < 0) {
     throw 'Invalid connection';
   }
+  // are we allowed to send an instrucdtion ?
+  if (this.sendTime) {
+    if ((now()-this.sendTime)<this.receivingTimeout) {
+      // need still to wait for previous command
+      this.onReceiveCompleted.dispatch(
+          {
+            'status' : 'error',
+            'messageID': this.sendMessageID,
+            'command' : this.sendCommand,
+            'data': this.lineBuffer,
+            'message': 'Previous command not yet finished, timeout in: '+(now()-this.sendTime)+'ms'
+          });
+    } else {
+      console.log("Previous command was cancelled");
+    }
+  }
+  this.sendTime=now();
+  this.sendMessageID=sendMessageID;
+  this.sendCommand=msg;
   serial.send(this.connectionId, str2ab(msg), function() {});
 };
 
@@ -81,29 +147,3 @@ SerialConnection.prototype.disconnect = function() {
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
-
-var connection = new SerialConnection();
-
-connection.onConnect.addListener(function() {
-  log('connected to: ' + DEVICE_PATH);
-});
-
-connection.onReadLine.addListener(function(line) {
-  log('read line: ' + line);
-});
-
-connection.connect(DEVICE_PATH);
-
-function log(msg) {
-  var buffer = document.querySelector('#buffer');
-  buffer.innerHTML += msg + '<br/>';
-}
-
-
-var nodes=document.querySelectorAll('button');
-for (var i=0; i<nodes.length; i++) {
-  nodes[i].addEventListener('click', function() {
-    connection.send(this.innerHTML+'\r\n');
-    buffer.innerHTML='Instruction: '+this.innerHTML+' sent.';
-  });
-}
