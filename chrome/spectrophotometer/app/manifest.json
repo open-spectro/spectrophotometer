@@ -1,5 +1,5 @@
 {
-  "name": "Open specdrophotometer!",
+  "name": "Open spectrophotometer",
   "description": "Specrophotometer controller of a open-source arduino based device.",
   "version": "0.0.0.1",
   "manifest_version": 2,
