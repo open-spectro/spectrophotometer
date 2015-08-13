@@ -1,16 +1,17 @@
 {
-  "name": "Hello World!",
-  "description": "My first Chrome App.",
-  "version": "0.1",
+  "name": "Open specdrophotometer!",
+  "description": "Specrophotometer controller of a open-source arduino based device.",
+  "version": "0.0.0.1",
   "manifest_version": 2,
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["background.js"],
+      "transient": true
     }
   },
-  "icons": { "16": "calculator-16.png", "128": "calculator-128.png" },
+  "icons": { "16": "icon_16.png", "128": "icon_128.png" },
   "permissions": [
-    "usb",
+    "serial",
     {
       "usbDevices": [
         {

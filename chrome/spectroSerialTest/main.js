@@ -1,11 +1,11 @@
 var matchRegexp = /tty.usbmodem/;
+var buffer = document.querySelector('#buffer');
 
 var connection = new SerialConnection();
 
 connection.getDevice(matchRegexp, function(path) {
   connection.connect(path);
 });
-
 
 connection.onReceiveCompleted.addListener(function(message) {
   console.log(message);
@@ -24,9 +24,7 @@ connection.onReadLine.addListener(function(line) {
 });
 
 
-
 function log(msg) {
-  var buffer = document.querySelector('#buffer');
   buffer.innerHTML += msg + '<br/>';
 }
 
