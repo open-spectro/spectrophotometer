@@ -36,8 +36,6 @@ char INFO[]={
   'R','G','B','W','U','Z','E','A' }; // E: experiment, Z: reference, A: RGB on
 
 
-
-
 // #define THR_MONITORING     13  // will also take care of the watch dog
 
 

@@ -73,8 +73,9 @@ void printHeader(Print* output, unsigned int backgroundArray[], byte channel, in
   output->print(getParameter(PARAM_GREEN_POINT));
   output->print("/");
   output->print(getParameter(PARAM_BLUE_POINT));
-
-
+// we print epoch
+//  output->print(",E");
+//  output->print(now());
 
   if (background) {
     int unsigned minBackground=65535;
