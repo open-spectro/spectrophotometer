@@ -14,6 +14,7 @@ CapacitiveSensor   cs_3_2 = CapacitiveSensor(3,2);        // 10M resistor betwee
 void setup()                    
 {
   Serial.begin(115200);
+  pinMode(13, OUTPUT);     
 }
 
 long previous=0;
@@ -23,7 +24,7 @@ void loop()
 {
   long start = millis();
 
-  long total =  cs_3_2.capacitiveSensor(50);
+  long total =  cs_3_2.capacitiveSensor(200);
 
   difference=total-previous;
   previous=total;
@@ -33,7 +34,13 @@ void loop()
   Serial.print(total);                  // print sensor output 1
   Serial.print("\t");                    // tab character for debug windown spacing
   Serial.println(difference);                  // print sensor output 1
-
+  if (total>25) {
+    digitalWrite(13, HIGH);
+  } 
+  else {
+    digitalWrite(13, LOW);
+  }
   delay(200);                             // arbitrary delay to limit data to serial port 
 }
+
 

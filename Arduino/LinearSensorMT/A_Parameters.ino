@@ -25,6 +25,15 @@
 #define PARAM_BLUE_INTENSITY    6
 #define PARAM_NUMBER_SCAN       7
 
+
+#define PARAM_RED_TEST          20
+#define PARAM_GREEN_TEST        21
+#define PARAM_BLUE_TEST         22
+#define PARAM_WHITE_TEST        23
+
+byte TEST[]={
+  PARAM_RED_TEST, PARAM_GREEN_TEST, PARAM_BLUE_TEST, PARAM_WHITE_TEST};
+
 //When parameters are set (and saved) an event is recorded (256-281 : A-Z + .... (if more parameters than 26))
 #define EVENT_SAVE_ALL_PARAMETER     255
 #define EVENT_PARAMETER_SET          256
