@@ -1,7 +1,5 @@
 const serial = chrome.serial;
 
-console.log(chrome.serial);
-console.log(serial);
 
 /* Interprets an ArrayBuffer as UTF-8 encoded string data. */
 var ab2str = function(buf) {
@@ -32,25 +30,53 @@ var SerialConnection = function() {
   this.sendCommand = "";
   this.boundOnReceive = this.onReceive.bind(this);
   this.boundOnReceiveError = this.onReceiveError.bind(this);
-  this.onConnect = new chrome.Event();
-  this.onReadLine = new chrome.Event();
-  this.onError = new chrome.Event();
+  this.onEvent = new chrome.Event();
   this.receivingTimeout = 5000;
   this.sendTime; // receiving data till it contains a double CR LF
   this.sendMessageID;
-  this.onReceiveCompleted = new chrome.Event();
+
 };
 
 SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
   if (!connectionInfo) {
-    log("Connection failed.");
+    this.onEvent.dispatch(this.errorMessage("Connection failed."));
     return;
   }
   this.connectionId = connectionInfo.connectionId;
   chrome.serial.onReceive.addListener(this.boundOnReceive);
   chrome.serial.onReceiveError.addListener(this.boundOnReceiveError);
-  this.onConnect.dispatch();
+  this.okMessage('Connection successful.');
 };
+
+SerialConnection.prototype.infoMessage = function(message, data) {
+  this.onEvent.dispatch({
+    'status': 'info',
+    'messageID': this.sendMessageID,
+    'message' : message,
+    'command' : this.sendCommand,
+    'data': data
+  });
+}
+
+SerialConnection.prototype.errorMessage = function(message, data) {
+  this.onEvent.dispatch({
+    'status': 'error',
+    'messageID': this.sendMessageID,
+    'message' : message,
+    'command' : this.sendCommand,
+    'data': data
+  });
+}
+
+SerialConnection.prototype.okMessage = function(message, data) {
+  this.onEvent.dispatch({
+    'status': 'ok',
+    'messageID': this.sendMessageID,
+    'message' : message,
+    'command' : this.sendCommand,
+    'data': data
+  });
+}
 
 SerialConnection.prototype.onReceive = function(receiveInfo) {
   if (receiveInfo.connectionId !== this.connectionId) {
@@ -63,18 +89,12 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
   var index;
   while ((index = this.lineBuffer.indexOf('\n')) >= 0) {
     var line = this.lineBuffer.substr(0, index + 1);
-    this.onReadLine.dispatch(line);
+    this.infoMessage('line received',line);
     this.lineBuffer = this.lineBuffer.substr(index + 1);
   }
 
   if (this.fullBuffer.match(/(\r\n?\r\n?|\n\n)/)) {
-    this.onReceiveCompleted.dispatch(
-        {
-          'status': 'ok',
-          'messageID': this.sendMessageID,
-          'command' : this.sendCommand,
-          'data': this.fullBuffer
-        });
+    this.okMessage('receive completed', this.fullBuffer)
     this.sendTime = null;
     this.lineBuffer = "";
     this.fullBuffer = "";
@@ -83,7 +103,7 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
 
 SerialConnection.prototype.onReceiveError = function(errorInfo) {
   if (errorInfo.connectionId === this.connectionId) {
-    this.onError.dispatch(errorInfo.error);
+    errorMessage(errorInfo.error);
   }
 };
 
@@ -103,11 +123,9 @@ SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
             }
           }
           if (matchDevices.length===0) {
-            console.log(devices);
-            throw new Error('No spectrophotometer found !');
+            errorMessage('No spectrophotometer found !');
           } else if (matchDevices.length>1) {
-            console.log(matchDevices);
-            throw new Error('More than one device found !');
+            errorMessage('More than one device found !');
           } else {
             callback(matchDevices[0]);
           }
@@ -124,13 +142,11 @@ SerialConnection.prototype.send = function(msg, sendMessageID) {
     if ((now()-this.sendTime)<this.receivingTimeout) {
       // need still to wait for previous command
       this.onReceiveCompleted.dispatch(
-          {
-            'status' : 'error',
-            'messageID': this.sendMessageID,
-            'command' : this.sendCommand,
-            'data': this.lineBuffer,
-            'message': 'Previous command not yet finished, timeout in: '+(now()-this.sendTime)+'ms'
-          });
+          this.errorMessage(
+              'Previous command not yet finished, timeout in: '+(now()-this.sendTime)+'ms',
+              this.fullBuffer
+          )
+      );
     } else {
       console.log("Previous command was cancelled");
     }
@@ -140,6 +156,7 @@ SerialConnection.prototype.send = function(msg, sendMessageID) {
   this.sendCommand=msg;
   serial.send(this.connectionId, str2ab(msg), function() {});
 };
+
 
 SerialConnection.prototype.disconnect = function() {
   if (this.connectionId < 0) {
