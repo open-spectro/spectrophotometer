@@ -1,7 +1,7 @@
 {
   "name": "Open spectrophotometer",
   "description": "Specrophotometer controller of a open-source arduino based device.",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "manifest_version": 2,
   "app": {
     "background": {

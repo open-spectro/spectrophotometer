@@ -1,4 +1,4 @@
-var matchRegexp = /tty.usbmodem|ttyASM/;
+var matchRegexp = /(tty.usbmodem|ttyASM)/;
 
 var connection = new SerialConnection();
 var webviewWindow;

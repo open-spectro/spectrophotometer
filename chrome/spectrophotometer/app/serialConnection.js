@@ -94,7 +94,6 @@ SerialConnection.prototype.connect = function(path) {
 };
 
 SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
-  console.log(serial);
     serial.getDevices(
         function (devices) {
           var matchDevices=[];
@@ -104,7 +103,7 @@ SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
             }
           }
           if (matchDevices.length===0) {
-            console.log(listDevices);
+            console.log(devices);
             throw new Error('No spectrophotometer found !');
           } else if (matchDevices.length>1) {
             console.log(matchDevices);
