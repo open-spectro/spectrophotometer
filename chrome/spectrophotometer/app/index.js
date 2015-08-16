@@ -1,6 +1,7 @@
-var matchRegexp = /(tty.usbmodem|ttyASM)/;
+var deviceMatchRegexp = /(tty.usbmodem|ttyASM)/;
 
-var connection = new SerialConnection();
+var connection = new SerialConnection({deviceMatchRegexp:deviceMatchRegexp});
+
 var webviewWindow;
 
 
@@ -9,7 +10,11 @@ connection.onEvent.addListener(function(message) {
     webviewWindow.postMessage(message, "*");
 });
 
-connection.getDevice(matchRegexp, function(path) {
+
+// TODO we should not deal with connect anymore
+// this should be done before each serial.send
+
+connection.getDevice(deviceMatchRegexp, function(path) {
     connection.connect(path);
 });
 

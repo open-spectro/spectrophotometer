@@ -1,4 +1,5 @@
-var SerialConnection = function() {
+var SerialConnection = function(options) {
+  var options=options || {};
   this.connectionId = -1;
   this.lineBuffer = "";
   this.fullBuffer = "";
@@ -9,9 +10,19 @@ var SerialConnection = function() {
   this.receivingTimeout = 5000;
   this.sendTime; // receiving data till it contains a double CR LF
   this.messageID;
+  this.defaultDevicePath;
+  this.deviceMatchRegexp=options.deviceMatchRegexp;
 };
 
 SerialConnection.prototype.serial = chrome.serial;
+
+SerialConnection.prototype.setDevice = function(devicePath) {
+  this.defaultDevicePath=devicePath;
+  chrome.storage.local.set({'defaultDevicePath': this.defaultDevicePath}, function() {
+    // Notify that we saved.
+    this.infoMessage('Default device saved', this.defaultDevicePath);
+  });
+}
 
 SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
   if (!connectionInfo) {
@@ -54,18 +65,31 @@ SerialConnection.prototype.onReceiveError = function(errorInfo) {
   }
 };
 
+/*
+TODO
+When sending data we will try to connect if there are no connection
+or the connection fails
+
+In order to connect we need:
+- read the local defaultDevice :  chrome.storage.local.get
+- try to connect based on defaultPath
+- if failed, try to find a device based on the matchRegexp and if one
+- connect the device
+
+ */
+
 SerialConnection.prototype.connect = function(path) {
   this.serial.connect(path, {
     bitrate: 115200
   }, this.onConnectComplete.bind(this))
 };
 
-SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
+SerialConnection.prototype.getDevice = function(deviceMatchRegexp, callback) {
     this.serial.getDevices(
         function (devices) {
           var matchDevices=[];
           for (var i=0; i<devices.length; i++) {
-            if (devices[i].path.match(matchRegexp)) {
+            if (devices[i].path.match(deviceMatchRegexp)) {
               matchDevices.push(devices[i].path)
             }
           }
@@ -81,31 +105,35 @@ SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
 }
 
 SerialConnection.prototype.devices = function() {
+  var self=this;
   this.serial.getDevices(
-      function (devices) {
-        var matchDevices=[];
-        matchDevices.push(devices[i].path);
-        this.successMessage("List of devices",devices);
-      }
+    function (devices) {
+      self.successMessage("Devices",devices);
+    }
   );
 }
 
 SerialConnection.prototype.send = function(D) {
   if (this.connectionId < 0) {
+    // TODO we should try to connect and resend
     this.errorMessage('Invalid connection');
   }
   var self=this;
   this.serial.send(this.connectionId, this.str2ab(this.message+"\r"), function(result) {
-    self.infoMessage("Number of bytes sent",result.bytesSent)
+    self.infoMessage("Send result of bytes sent",result.bytesSent);
+    // TODO it could be an error in result.error
+    // In this case we could disconnect and try to connect again once
   });
 };
 
 
 SerialConnection.prototype.disconnect = function() {
   if (this.connectionId < 0) {
-    throw 'Invalid connection';
+    this.infoMessage('Trying to close invalid connection: '+this.connectionId);
+  } else {
+    this.serial.disconnect(this.connectionId, function() {});
+    this.connectionId=-1;
   }
-  this.serial.disconnect(this.connectionId, function() {});
 };
 
 SerialConnection.prototype.dispatch = function(data) {
@@ -135,6 +163,9 @@ SerialConnection.prototype.dispatch = function(data) {
       break;
     case "serial.devices":
       this.devices();
+      break;
+    case "serial.setDevice":
+      this.setDevice(this.message);
       break;
     default:
       this.errorMessage(data.messageID, 'action "'+data.action+'" not implemented', data);
