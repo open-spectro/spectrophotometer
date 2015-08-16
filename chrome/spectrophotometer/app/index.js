@@ -14,7 +14,7 @@ connection.onEvent.addListener(function(message) {
 // TODO we should not deal with connect anymore
 // this should be done before each serial.send
 
-connection.getDevice(deviceMatchRegexp, function(path) {
+connection.getDevice(deviceMatchRegexp).then(function(path) {
     connection.connect(path);
 });
 

@@ -1,3 +1,4 @@
+
 var SerialConnection = function(options) {
   var options=options || {};
   this.connectionId = -1;
@@ -12,6 +13,9 @@ var SerialConnection = function(options) {
   this.messageID;
   this.defaultDevicePath;
   this.deviceMatchRegexp=options.deviceMatchRegexp;
+
+  this.serial.onReceive.addListener(this.boundOnReceive);
+  this.serial.onReceiveError.addListener(this.boundOnReceiveError);
 };
 
 SerialConnection.prototype.serial = chrome.serial;
@@ -20,20 +24,11 @@ SerialConnection.prototype.setDevice = function(devicePath) {
   this.defaultDevicePath=devicePath;
   chrome.storage.local.set({'defaultDevicePath': this.defaultDevicePath}, function() {
     // Notify that we saved.
-    this.infoMessage('Default device saved', this.defaultDevicePath);
+    this.sendMessage('info','Default device saved', this.defaultDevicePath);
   });
 }
 
-SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
-  if (!connectionInfo) {
-    this.onEvent.dispatch(this.errorMessage("Connection failed."));
-    return;
-  }
-  this.connectionId = connectionInfo.connectionId;
-  this.serial.onReceive.addListener(this.boundOnReceive);
-  this.serial.onReceiveError.addListener(this.boundOnReceiveError);
-  this.successMessage('Connection successful.');
-};
+
 
 
 SerialConnection.prototype.onReceive = function(receiveInfo) {
@@ -47,12 +42,12 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
   var index;
   while ((index = this.lineBuffer.indexOf('\n')) >= 0) {
     var line = this.lineBuffer.substr(0, index + 1);
-    this.infoMessage('line received',line);
+    this.sendMessage('info','line received',line);
     this.lineBuffer = this.lineBuffer.substr(index + 1);
   }
 
   if (this.fullBuffer.match(/(\r\n?\r\n?|\n\n)/)) {
-    this.successMessage('receive completed', this.fullBuffer)
+    this.sendMessage('success','receive completed', this.fullBuffer)
     this.sendTime = null;
     this.lineBuffer = "";
     this.fullBuffer = "";
@@ -61,7 +56,7 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
 
 SerialConnection.prototype.onReceiveError = function(errorInfo) {
   if (errorInfo.connectionId === this.connectionId) {
-    errorMessage(errorInfo.error);
+    sendMessage('error',errorInfo.error);
   }
 };
 
@@ -78,62 +73,91 @@ In order to connect we need:
 
  */
 
-SerialConnection.prototype.connect = function(path) {
-  this.serial.connect(path, {
-    bitrate: 115200
-  }, this.onConnectComplete.bind(this))
+SerialConnection.prototype.connect = function(path, options) {
+  var self=this;
+  return new Promise(function(resolve, reject) {
+    var options = options || {};
+    options.bitrate = options.bitrate || 115200;
+    self.serial.connect(path, options,function(connectionInfo) {
+      if (!connectionInfo) {
+        self.sendMessage('error',"Connection failed.");
+        reject();
+      } else {
+        self.connectionId = connectionInfo.connectionId;
+        self.sendMessage('success','Connection successful.');
+        resolve();
+      }
+    });
+  });
 };
 
 SerialConnection.prototype.getDevice = function(deviceMatchRegexp, callback) {
-    this.serial.getDevices(
-        function (devices) {
-          var matchDevices=[];
-          for (var i=0; i<devices.length; i++) {
-            if (devices[i].path.match(deviceMatchRegexp)) {
-              matchDevices.push(devices[i].path)
-            }
-          }
-          if (matchDevices.length===0) {
-            errorMessage('No spectrophotometer found !');
-          } else if (matchDevices.length>1) {
-            errorMessage('More than one device found !');
-          } else {
-            callback(matchDevices[0]);
+  var self=this;
+  return new Promise(function(resolve, reject) {
+    self.serial.getDevices(
+      function (devices) {
+        var matchDevices=[];
+        for (var i=0; i<devices.length; i++) {
+          if (devices[i].path.match(deviceMatchRegexp)) {
+            matchDevices.push(devices[i].path)
           }
         }
+        if (matchDevices.length===0) {
+          self.sendMessage('error','No spectrophotometer found !');
+          reject('No spectrophotometer found !');
+        } else if (matchDevices.length>1) {
+          self.sendMessage('error','More than one device found !');
+          reject('More than one device found !');
+        } else {
+          resolve(matchDevices[0]);
+        }
+      }
     );
+  })
+
 }
 
 SerialConnection.prototype.devices = function() {
   var self=this;
   this.serial.getDevices(
     function (devices) {
-      self.successMessage("Devices",devices);
+      self.sendMessage('success',"Devices",devices);
     }
   );
 }
 
-SerialConnection.prototype.send = function(D) {
-  if (this.connectionId < 0) {
-    // TODO we should try to connect and resend
-    this.errorMessage('Invalid connection');
-  }
+SerialConnection.prototype.send = function() {
   var self=this;
-  this.serial.send(this.connectionId, this.str2ab(this.message+"\r"), function(result) {
-    self.infoMessage("Send result of bytes sent",result.bytesSent);
-    // TODO it could be an error in result.error
-    // In this case we could disconnect and try to connect again once
+  return new Promise(function(resolve, reject) {
+    if (self.connectionId < 0) {
+      // TODO we should try to connect and resend
+      self.sendMessage('error','Invalid connection');
+      reject('Invalid connection');
+    } else {
+      self.serial.send(self.connectionId, self.str2ab(self.message+"\r"), function(sendInfo) {
+        if (sendInfo.error) {
+          reject(sendInfo.error);
+          self.sendMessage('error',"Send result of bytes sent",sendInfo.bytesSent);
+        } else {
+          resolve(sendInfo.bytesSent);
+          self.sendMessage('info',"Send result of bytes sent",sendInfo.bytesSent);
+        }
+      });
+    }
   });
 };
 
 
 SerialConnection.prototype.disconnect = function() {
-  if (this.connectionId < 0) {
-    this.infoMessage('Trying to close invalid connection: '+this.connectionId);
-  } else {
-    this.serial.disconnect(this.connectionId, function() {});
-    this.connectionId=-1;
-  }
+  var self=this;
+  return new Promise(function(resolve, reject) {
+    if (self.connectionId < 0) {
+      self.sendMessage('info','Trying to close invalid connection: '+self.connectionId);
+    } else {
+      self.serial.disconnect(this.connectionId, function() {});
+      self.connectionId=-1;
+    }
+  });
 };
 
 SerialConnection.prototype.dispatch = function(data) {
@@ -142,13 +166,13 @@ SerialConnection.prototype.dispatch = function(data) {
     if ((this.now()-this.sendTime)<this.receivingTimeout) {
       // need still to wait for previous command
       this.onReceiveCompleted.dispatch(
-          this.errorMessage(
+          this.sendMessage('error',
               'Previous command not yet finished, timeout in: '+(this.now()-this.sendTime)+'ms',
               this.fullBuffer
           )
       );
     } else {
-      this.infoMessage(
+      this.sendMessage('info',
           "Previous command was cancelled"
       )
     }
@@ -168,7 +192,7 @@ SerialConnection.prototype.dispatch = function(data) {
       this.setDevice(this.message);
       break;
     default:
-      this.errorMessage(data.messageID, 'action "'+data.action+'" not implemented', data);
+      this.sendMessage('error',data.messageID, 'action "'+data.action+'" not implemented', data);
   }
 }
 
@@ -176,35 +200,22 @@ SerialConnection.prototype.dispatch = function(data) {
 //////////////////////////////////////
 /////////// Message functions
 
-SerialConnection.prototype.infoMessage = function(message, data) {
-  this.onEvent.dispatch({
-    'status': 'info',
-    'messageID': this.messageID,
-    'message' : message,
-    'command' : this.message,
-    'data': data
-  });
+SerialConnection.prototype.sendMessage = function(type, message, data) {
+  var self=this;
+  this.onEvent.dispatch(
+      self.getMessage(type, message, data)
+  );
 }
 
-SerialConnection.prototype.errorMessage = function(message, data) {
-  this.onEvent.dispatch({
-    'status': 'error',
+SerialConnection.prototype.getMessage = function(type, message, data) {
+  return {
+    'status': type,
     'messageID': this.messageID,
     'message' : message,
     'command' : this.message,
     'data': data
-  });
-}
-
-SerialConnection.prototype.successMessage = function(message, data) {
-  this.onEvent.dispatch({
-    'status': 'success',
-    'messageID': this.messageID,
-    'message' : message,
-    'command' : this.message,
-    'data': data
-  });
-}
+  };
+};
 
 
 //////////////////////////////////////
@@ -212,7 +223,7 @@ SerialConnection.prototype.successMessage = function(message, data) {
 
 SerialConnection.prototype.now = function () {
   return (new Date).getTime();
-}
+};
 
 /* Interprets an ArrayBuffer as UTF-8 encoded string data. */
 SerialConnection.prototype.ab2str = function(buf) {
