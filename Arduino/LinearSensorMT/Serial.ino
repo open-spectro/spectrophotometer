@@ -73,11 +73,9 @@ void printResult(char* data, Print* output) {
         if (paramValuePosition>0) {
           setAndSaveParameter(paramCurrent-1,atoi(paramValue));
           output->println(parameters[paramCurrent-1]);
-          output->println("");
         } 
         else {
           output->println(parameters[paramCurrent-1]);
-          output->println("");
         }
         if (paramCurrent<=MAX_PARAM) {
           paramCurrent++;
@@ -111,7 +109,6 @@ void printResult(char* data, Print* output) {
         } 
         else {
           output->println(now());
-          output->println("");
         }
       }
       // this is a carriage return;
@@ -119,11 +116,9 @@ void printResult(char* data, Print* output) {
         if (paramValuePosition>0) {
           setAndSaveParameter(paramCurrent-1,atoi(paramValue));
           output->println(parameters[paramCurrent-1]);
-          output->println("");
         } 
         else {
           output->println(parameters[paramCurrent-1]);
-          output->println("");
         }
       }      
     }
@@ -147,7 +142,9 @@ void printResult(char* data, Print* output) {
         paramCurrent=0; 
       }
     } 
-
+    if (theEnd) {
+      output->println("");
+    }
   }
 }
 
@@ -158,17 +155,17 @@ void serialPrintHelp(Print* output) {
   output->println(F("(g)reen intensity test"));  
   output->println(F("(r)un experiment"));
   output->println(F("(t)est all colors"));
-//  output->println(F("(d)ebug"));
+  //  output->println(F("(d)ebug"));
   output->println(F("(e)poch"));
   output->println(F("(f)ree mem"));
   output->println(F("(h)elp"));
-//  output->println(F("(i)2c"));
-//  output->println(F("(l)og"));
-//  output->println(F("(q)ualifier"));
+  //  output->println(F("(i)2c"));
+  //  output->println(F("(l)og"));
+  //  output->println(F("(q)ualifier"));
   output->println(F("(s)ettings"));
   output->println(F("(z) eeprom"));
-  output->println("");
 }
+
 
 
 

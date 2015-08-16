@@ -4,7 +4,6 @@
 static void printFreeMemory(Print* output)
 {
   nilPrintUnusedStack(output);
-  output->println("");
 }
 
 

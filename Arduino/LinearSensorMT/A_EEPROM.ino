@@ -69,7 +69,6 @@ void getStatusEEPROM(Print* output) {
       output->print(buf);
     }
   }
-    output->println("");
 }
 
 

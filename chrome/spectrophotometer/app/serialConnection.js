@@ -45,7 +45,7 @@ SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
   this.connectionId = connectionInfo.connectionId;
   chrome.serial.onReceive.addListener(this.boundOnReceive);
   chrome.serial.onReceiveError.addListener(this.boundOnReceiveError);
-  this.okMessage('Connection successful.');
+  this.successMessage('Connection successful.');
 };
 
 SerialConnection.prototype.infoMessage = function(message, data) {
@@ -68,9 +68,9 @@ SerialConnection.prototype.errorMessage = function(message, data) {
   });
 }
 
-SerialConnection.prototype.okMessage = function(message, data) {
+SerialConnection.prototype.successMessage = function(message, data) {
   this.onEvent.dispatch({
-    'status': 'ok',
+    'status': 'success',
     'messageID': this.sendMessageID,
     'message' : message,
     'command' : this.sendCommand,
@@ -94,7 +94,7 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
   }
 
   if (this.fullBuffer.match(/(\r\n?\r\n?|\n\n)/)) {
-    this.okMessage('receive completed', this.fullBuffer)
+    this.successMessage('receive completed', this.fullBuffer)
     this.sendTime = null;
     this.lineBuffer = "";
     this.fullBuffer = "";

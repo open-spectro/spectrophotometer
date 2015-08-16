@@ -122,7 +122,6 @@ void printParameters(Print* output) {
   for (int i = 0; i < MAX_PARAM; i++) {
     printParameter(output, i);
   }
-  output->println("");
 }
 
 uint8_t printCompactParameters(Print* output) {
@@ -142,7 +141,6 @@ uint8_t printCompactParameters(Print* output, byte number) {
     checkDigit^=toHex(output, value);
   }
   toHex(output, checkDigit);
-    output->println("");
 }
 
 

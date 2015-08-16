@@ -32,7 +32,6 @@ void rgbOn() {
   acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 7, getParameter(PARAM_RED_INTENSITY));
-output->println("");
 }
 
 
@@ -51,7 +50,6 @@ void testAllColors() {
     diffArray(signalArray, backgroundArray);
     printResult(output, signalArray, backgroundArray, i, currentIntensity);
   }
-  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 void realExperiment() {
@@ -90,7 +88,6 @@ void realExperiment() {
   acquire(backgroundArray);
   diffArray(signalArray, backgroundArray);
   printResult(output, signalArray, backgroundArray, 6, currentIntensity);
-  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 
@@ -110,7 +107,6 @@ void testGreenIntensity() {
     printResult(&Serial, signalArray, backgroundArray, 1, intensity);
     intensity/=2;
   }
-  output->println(""); // <-- Send a linebreak to indicate the measurement is transmitted.
 }
 
 

@@ -54,7 +54,6 @@ void getDebuggerLog(Print* output) {
         output->print(": ");
         output->print(debugParameters[i]);
       }
-      output->println("");
     }
   }
 }
