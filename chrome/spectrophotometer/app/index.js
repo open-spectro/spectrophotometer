@@ -14,19 +14,16 @@ connection.getDevice(matchRegexp, function(path) {
 });
 
 
-
+// we need to inject in the webview the current page so that we can
+// communicate with it
 document.getElementById('webview').addEventListener("contentload", function () {
-    console.log("Content loaded");
     try{
         webviewWindow=webview.contentWindow;
         webviewWindow.postMessage("Message from Chrome APP!", "*");
     }catch(error){
         console.log("postMessage error: " + error);
     }
-
 });
-
-
 
 
 function errorMessage(messageID, message, data) {
@@ -39,19 +36,22 @@ function errorMessage(messageID, message, data) {
 }
 
 
-
 window.addEventListener("message", receiveMessage, false);
-
 function receiveMessage(event) {
     var data = event.data;
-    switch (data.action) {
-        case "serial.send":
-            connection.send(data.message + '\r\n', data.messageID);
+    if (! data.action) {
+        console.log("Unspecified action: ",event);
+        return;
+    }
+    var actionType=data.action.replace(/\..*/,"")
+    switch (actionType) {
+        case "serial":
+            connection.dispatch(data);
             break;
-        case "serial.devices":
-            connection.devices(data.message + '\r\n', data.messageID);
+        case "file":
+            // TODO access to filesystem
             break;
         default:
-            errorMessage(data.messageID, 'action "'+data.action+'" not implemented', data);
+            errorMessage(data.messageID, 'action "'+actionType+'" not implemented', data);
     }
 }
