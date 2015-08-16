@@ -2,17 +2,16 @@ var SerialConnection = function() {
   this.connectionId = -1;
   this.lineBuffer = "";
   this.fullBuffer = "";
-  this.sendCommand = "";
+  this.message = "";
   this.boundOnReceive = this.onReceive.bind(this);
   this.boundOnReceiveError = this.onReceiveError.bind(this);
   this.onEvent = new chrome.Event();
   this.receivingTimeout = 5000;
   this.sendTime; // receiving data till it contains a double CR LF
-  this.sendMessageID;
+  this.messageID;
 };
 
 SerialConnection.prototype.serial = chrome.serial;
-
 
 SerialConnection.prototype.onConnectComplete = function(connectionInfo) {
   if (!connectionInfo) {
@@ -81,11 +80,24 @@ SerialConnection.prototype.getDevice = function(matchRegexp, callback) {
     );
 }
 
-SerialConnection.prototype.send = function(msg, sendMessageID) {
+SerialConnection.prototype.devices = function() {
+  this.serial.getDevices(
+      function (devices) {
+        var matchDevices=[];
+        matchDevices.push(devices[i].path);
+        this.successMessage("List of devices",devices);
+      }
+  );
+}
+
+SerialConnection.prototype.send = function(D) {
   if (this.connectionId < 0) {
     this.errorMessage('Invalid connection');
   }
-  this.serial.send(this.connectionId, this.str2ab(msg), function() {});
+  var self=this;
+  this.serial.send(this.connectionId, this.str2ab(this.message+"\r"), function(result) {
+    self.infoMessage("Number of bytes sent",result.bytesSent)
+  });
 };
 
 
@@ -114,16 +126,15 @@ SerialConnection.prototype.dispatch = function(data) {
     }
   }
   this.sendTime=this.now();
-  this.sendMessageID=data.messageID;
-  this.sendCommand=data.command;
-
+  this.messageID=data.messageID;
+  this.message=data.message;
 
   switch (data.action) {
     case "serial.send":
-      this.send(data.message + '\r\n', data.messageID);
+      this.send();
       break;
     case "serial.devices":
-      this.devices(data.message + '\r\n', data.messageID);
+      this.devices();
       break;
     default:
       this.errorMessage(data.messageID, 'action "'+data.action+'" not implemented', data);
@@ -137,9 +148,9 @@ SerialConnection.prototype.dispatch = function(data) {
 SerialConnection.prototype.infoMessage = function(message, data) {
   this.onEvent.dispatch({
     'status': 'info',
-    'messageID': this.sendMessageID,
+    'messageID': this.messageID,
     'message' : message,
-    'command' : this.sendCommand,
+    'command' : this.message,
     'data': data
   });
 }
@@ -147,9 +158,9 @@ SerialConnection.prototype.infoMessage = function(message, data) {
 SerialConnection.prototype.errorMessage = function(message, data) {
   this.onEvent.dispatch({
     'status': 'error',
-    'messageID': this.sendMessageID,
+    'messageID': this.messageID,
     'message' : message,
-    'command' : this.sendCommand,
+    'command' : this.message,
     'data': data
   });
 }
@@ -157,9 +168,9 @@ SerialConnection.prototype.errorMessage = function(message, data) {
 SerialConnection.prototype.successMessage = function(message, data) {
   this.onEvent.dispatch({
     'status': 'success',
-    'messageID': this.sendMessageID,
+    'messageID': this.messageID,
     'message' : message,
-    'command' : this.sendCommand,
+    'command' : this.message,
     'data': data
   });
 }
