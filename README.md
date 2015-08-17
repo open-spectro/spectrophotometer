@@ -23,7 +23,7 @@ There are 4 main parts in this project
 * the box
 * the end-user graphical interface
 
-Thanks to a google chrome "apps" it is possible directly from the web-browser to control the instrument. The application is available for [free on the store])https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn).
+Thanks to a google chrome "apps" it is possible directly from the web-browser to control the instrument. The application is available for [free on the store](https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn).
 
 ## Electronic and microcontroller
 
@@ -64,13 +64,13 @@ To create the box we are using:
 ## End-user graphical interface
 
 The user interface is based on the 
-[Visualizer](http://github.com/npellet/visualizer)
+[Visualizer](http://github.com/npellet/visualizer) and is available on the [Google Apps store](https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn)
 
-## Control from the terminal
+## Control from the terminal (Advanced users)
 
 From a terminal on the macintosh you could currently do something like
 
-``` screen /dev/tty.usbmodemfd131 115200 ```
+``` screen /dev/tty.usbmodemfdXXX 115200 ```
 
 (you need to find the correct tty device using 
 
@@ -90,7 +90,7 @@ To take a spectrum:
 
 ```r + enter```
 
-You will then have 10s (blue binling) to put the reference sample.
+You will then have 10s (blue blinking) to put the reference sample.
 Once the green flash appears you have 10s to put the sample.
 
 All the results may be pasted in a view:
