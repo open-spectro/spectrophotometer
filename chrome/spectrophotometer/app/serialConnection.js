@@ -1,4 +1,5 @@
 
+
 var SerialConnection = function(options) {
   var options=options || {};
   this.connectionId = -1;
@@ -16,22 +17,39 @@ var SerialConnection = function(options) {
 
   this.serial.onReceive.addListener(this.boundOnReceive);
   this.serial.onReceiveError.addListener(this.boundOnReceiveError);
+
+  this.localStorage=new LocalStorage();
+
+  var self=this;
+  this.localStorage.get('defaultDevicePath').then(
+      function(result) {
+        self.defaultDevicePath=result.defaultDevicePath;
+      }
+  )
+
+
 };
 
 SerialConnection.prototype.serial = chrome.serial;
 
-SerialConnection.prototype.setDevice = function(devicePath) {
+SerialConnection.prototype.setDefaultDevicePath = function(devicePath) {
+  var self=this;
   this.defaultDevicePath=devicePath;
-  chrome.storage.local.set({'defaultDevicePath': this.defaultDevicePath}, function() {
-    // Notify that we saved.
-    this.sendMessage('info','Default device saved', this.defaultDevicePath);
-  });
+  return new Promise(function(resolve, reject) {
+    self.localStorage.set('defaultDevicePath',self.defaultDevicePath).then(
+      function(result) {
+        self.sendMessage('info','Default device saved', devicePath);
+      }).then(resolve, reject);
+  })
 }
 
 
 
 
 SerialConnection.prototype.onReceive = function(receiveInfo) {
+
+
+
   if (receiveInfo.connectionId !== this.connectionId) {
     return;
   }
@@ -77,37 +95,63 @@ SerialConnection.prototype.connect = function(path, options) {
   var self=this;
   return new Promise(function(resolve, reject) {
     var options = options || {};
+    if (! path) {
+      reject(self.getMessage('error',"Trying to open a serial connection for unspecified path"));
+      return;
+    }
     options.bitrate = options.bitrate || 115200;
     self.serial.connect(path, options,function(connectionInfo) {
       if (!connectionInfo) {
-        self.sendMessage('error',"Connection failed.");
-        reject();
+        reject(self.getMessage('error',"Connection failed."));
       } else {
         self.connectionId = connectionInfo.connectionId;
-        self.sendMessage('success','Connection successful.');
-        resolve();
+        resolve(self.getMessage('success','Connection successful.', connectionInfo));
       }
     });
   });
 };
 
-SerialConnection.prototype.getDevice = function(deviceMatchRegexp, callback) {
+SerialConnection.prototype.bestConnect = function(options) {
+  var self=this;
+  return new Promise(function(resolve, reject) {
+    // is there a default device ????
+    console.log("Trying using defaultDevicePath: "+self.defaultDevicePath);
+    self.connect(self.defaultDevicePath, options).catch( // no way to open the default device
+        function(result) {
+          // we try to get a device based on regexp
+          console.log("Trying to get the device based on the regexp: "+this.deviceMatchRegexp);
+          return self.getDevice().then(function(result) {
+            self.sendMessage('info', 'Found a device from regexp: '+result);
+            return self.connect(result, options);
+          });
+
+        }
+    ).then(function(result) { // we have a conneciton !
+          console.log('We got a connection !')
+          resolve();
+        }, function(error) { // still no connection :( we give up ...
+          console.log('no way to get a conneciton ...')
+          reject();
+        })
+  });
+};
+
+
+SerialConnection.prototype.getDevice = function() {
   var self=this;
   return new Promise(function(resolve, reject) {
     self.serial.getDevices(
       function (devices) {
         var matchDevices=[];
         for (var i=0; i<devices.length; i++) {
-          if (devices[i].path.match(deviceMatchRegexp)) {
+          if (devices[i].path.match(self.deviceMatchRegexp)) {
             matchDevices.push(devices[i].path)
           }
         }
         if (matchDevices.length===0) {
-          self.sendMessage('error','No spectrophotometer found !');
-          reject('No spectrophotometer found !');
+          reject(self.getMessage('error','No serial path found !'));
         } else if (matchDevices.length>1) {
-          self.sendMessage('error','More than one device found !');
-          reject('More than one device found !');
+          reject(self.getMessage('error','More than one serial device found !'));
         } else {
           resolve(matchDevices[0]);
         }
@@ -117,29 +161,29 @@ SerialConnection.prototype.getDevice = function(deviceMatchRegexp, callback) {
 
 }
 
-SerialConnection.prototype.devices = function() {
+SerialConnection.prototype.getDevices = function() {
   var self=this;
-  this.serial.getDevices(
-    function (devices) {
-      self.sendMessage('success',"Devices",devices);
-    }
-  );
+  return new Promise(function(resolve, reject) {
+    self.serial.getDevices(
+        function (devices) {
+          resolve(self.getMessage('success',"Devices",devices))
+        }
+    );
+  })
 }
 
 SerialConnection.prototype.send = function() {
   var self=this;
   return new Promise(function(resolve, reject) {
     if (self.connectionId < 0) {
-      // TODO we should try to connect and resend
-      self.sendMessage('error','Invalid connection');
-      reject('Invalid connection');
+      reject(self.getMessage('error','Invalid connection'));
     } else {
+      console.log("We will send the message to serial port: "+self.message);
       self.serial.send(self.connectionId, self.str2ab(self.message+"\r"), function(sendInfo) {
         if (sendInfo.error) {
-          reject(sendInfo.error);
-          self.sendMessage('error',"Send result of bytes sent",sendInfo.bytesSent);
+          reject(self.getMessage('error','Send error', sendInfo.error));
         } else {
-          resolve(sendInfo.bytesSent);
+          resolve();
           self.sendMessage('info',"Send result of bytes sent",sendInfo.bytesSent);
         }
       });
@@ -153,9 +197,12 @@ SerialConnection.prototype.disconnect = function() {
   return new Promise(function(resolve, reject) {
     if (self.connectionId < 0) {
       self.sendMessage('info','Trying to close invalid connection: '+self.connectionId);
+      resolve();
     } else {
-      self.serial.disconnect(this.connectionId, function() {});
-      self.connectionId=-1;
+      self.serial.disconnect(self.connectionId, function() {
+        self.connectionId=-1;
+        resolve();
+      });
     }
   });
 };
@@ -181,18 +228,62 @@ SerialConnection.prototype.dispatch = function(data) {
   this.messageID=data.messageID;
   this.message=data.message;
 
+  var self=this;
+
   switch (data.action) {
     case "serial.send":
-      this.send();
+      console.log("We want to send a message");
+        /*
+        1. try to send the command
+        2. if failed:  try to open default device
+        3. if failed:  try to find a good device (based on regexp)
+        4. try to send the command
+         */
+      this.send().catch(
+          function(error) { // could not send ... we will try to reopen the connection
+            self.sendMessage('warn', 'Could not send the message');
+            return self.bestConnect({}).then(
+                function(result) {
+                   return self.send();
+                }
+            )
+          }
+      ).then(function(result) {
+            self.sendMessage('info', 'Could send the message to USB device');
+          },
+          function(error) {
+            self.sendMessage('error', 'Didn\'t succeed to connect to the usb device');
+            self.sendTime = null;
+          }
+      );
       break;
-    case "serial.devices":
-      this.devices();
+    case "serial.getDevices":
+        console.log("Getting devices list")
+      this.getDevices().then(
+          function(result) {
+            self.sendMessage(result);
+            self.sendTime = null;
+          }
+      );
       break;
-    case "serial.setDevice":
-      this.setDevice(this.message);
+    case "serial.setDefaultDevicePath":
+        this.disconnect().catch().then(function(result) {
+          self.connectionId=null;
+        }).then(function(result) {
+          return self.setDefaultDevicePath(self.message);
+        }).then(
+          function(result) {
+            self.sendMessage('success','Default device saved', result);
+            self.sendTime = null;
+          },
+          function(error) {
+            self.sendMessage('error','Failed to setDevice', error);
+            self.sendTime = null;
+          }
+      );
       break;
     default:
-      this.sendMessage('error',data.messageID, 'action "'+data.action+'" not implemented', data);
+      this.sendMessage('error','action "'+data.action+'" not implemented', data);
   }
 }
 
@@ -202,9 +293,14 @@ SerialConnection.prototype.dispatch = function(data) {
 
 SerialConnection.prototype.sendMessage = function(type, message, data) {
   var self=this;
-  this.onEvent.dispatch(
-      self.getMessage(type, message, data)
-  );
+
+  if (typeof type === 'object') { // it is already a well formed message, no need to construct it
+    this.onEvent.dispatch(type);
+  } else {
+    this.onEvent.dispatch(
+        self.getMessage(type, message, data)
+    );
+  }
 }
 
 SerialConnection.prototype.getMessage = function(type, message, data) {

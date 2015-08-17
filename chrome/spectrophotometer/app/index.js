@@ -11,14 +11,6 @@ connection.onEvent.addListener(function(message) {
 });
 
 
-// TODO we should not deal with connect anymore
-// this should be done before each serial.send
-
-connection.getDevice(deviceMatchRegexp).then(function(path) {
-    connection.connect(path);
-});
-
-
 // we need to inject in the webview the current page so that we can
 // communicate with it
 document.getElementById('webview').addEventListener("contentload", function () {

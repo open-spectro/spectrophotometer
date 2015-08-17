@@ -1,10 +1,10 @@
-var LocalStorage = function() {
+var SyncStorage = function() {
 
 }
 
-LocalStorage.prototype.get = function(key) {
+SyncStorage.prototype.get = function(key) {
   return new Promise(function(resolve, reject) {
-    chrome.storage.local.get(key, function(items) {
+    chrome.storage.sync.get(key, function(items) {
       if (chrome.runtime.lastError) {
         reject("Error: "+chrome.runtime.lastError.message);
       }
@@ -13,11 +13,11 @@ LocalStorage.prototype.get = function(key) {
   })
 }
 
-LocalStorage.prototype.set = function(key, value) {
+SyncStorage.prototype.set = function(key, value) {
   return new Promise(function(resolve, reject) {
     var toStore={};
     toStore[key]=value;
-    chrome.storage.local.set(toStore, function() {
+    chrome.storage.sync.set(toStore, function() {
       if (chrome.runtime.lastError) {
         reject("Error: "+chrome.runtime.lastError.message);
       }
