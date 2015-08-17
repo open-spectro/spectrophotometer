@@ -74,7 +74,7 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
 
 SerialConnection.prototype.onReceiveError = function(errorInfo) {
   if (errorInfo.connectionId === this.connectionId) {
-    sendMessage('error',errorInfo.error);
+    this.sendMessage('error',errorInfo.error);
   }
 };
 
