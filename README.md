@@ -2,7 +2,7 @@
 
 ## Introduction
 
-You can find very expensive and performant 
+You can find very expensive and powerful 
 spectrophotometer on the market but for teaching they are most
 of the time a black box that can not be open.
 
@@ -14,7 +14,7 @@ blue, white) that can be turned on / off. The beam will
 cross a cell, go through a slit and is diffracted using a
 grating film.
 
-A linear sensor allows to analyse the intensity of each
+A linear sensor allows to analyze the intensity of each
 resulting wavelength.
 
 There are 4 main parts in this project
@@ -23,9 +23,7 @@ There are 4 main parts in this project
 * the box
 * the end-user graphical interface
 
-We hope that we could transfer the data by emulating a keyboard
-and send the result directly in a web page where it could be
-processed.
+Thanks to a google chrome "apps" it is possible directly from the web-browser to control the instrument. The application is available for [free on the store](https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn).
 
 ## Electronic and microcontroller
 
@@ -66,13 +64,13 @@ To create the box we are using:
 ## End-user graphical interface
 
 The user interface is based on the 
-[Visualizer](http://github.com/npellet/visualizer)
+[Visualizer](http://github.com/npellet/visualizer) and is available on the [Google Apps store](https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn)
 
-## Control from the terminal
+## Control from the terminal (Advanced users)
 
 From a terminal on the macintosh you could currently do something like
 
-``` screen /dev/tty.usbmodemfd131 115200 ```
+``` screen /dev/tty.usbmodemfdXXX 115200 ```
 
 (you need to find the correct tty device using 
 
@@ -92,7 +90,7 @@ To take a spectrum:
 
 ```r + enter```
 
-You will then have 10s (blue binling) to put the reference sample.
+You will then have 10s (blue blinking) to put the reference sample.
 Once the green flash appears you have 10s to put the sample.
 
 All the results may be pasted in a view:
