@@ -25,6 +25,8 @@ There are 4 main parts in this project
 
 Thanks to a google chrome "apps" it is possible directly from the web-browser to control the instrument. The application is available for [free on the store](https://chrome.google.com/webstore/detail/open-spectrophotometer/bmkhbnoonjkmdlkfncokjkanfgilppkn).
 
+<img src='presentation/box.png'>
+
 ## Electronic and microcontroller
 
 We played for a while with the Arduino platform and quickly
@@ -37,6 +39,8 @@ the device using the [Arduino](http://www.arduino.cc/).
 
 The linear sensor is based on the linear sensor array 
 [TSL1402R](http://ams.com/content/download/250165/975693/TSL1402R_Datasheet_EN_v1.pdf).
+
+<img src='presentation/electronic.png'>
 
 ### Buttons
 
